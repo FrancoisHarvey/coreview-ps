@@ -1,9 +1,9 @@
-function New-CvWebRequestSession {
+﻿function New-CvWebRequestSession {
 	<#
 	.SYNOPSIS
 		Logs in to CoreView and returns a [WebRequestSession] object
 	#>
-	[CmdletBinding()]
+	[CmdletBinding(ConfirmImpact = 'None')]
 	[OutputType([Microsoft.PowerShell.Commands.WebRequestSession])]
 	param(
 		[Parameter(Mandatory, Position = 1)]
@@ -24,6 +24,7 @@ function New-CvWebRequestSession {
 	}
 
 	begin {
+		$APIKey = $APIKey.Trim()
 		$mutable = @{}
 
 		function GetLoginEndpointURL {

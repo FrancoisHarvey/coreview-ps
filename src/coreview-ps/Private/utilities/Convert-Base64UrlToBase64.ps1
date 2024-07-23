@@ -1,10 +1,12 @@
-function Convert-Base64UrlToBase64 {
-	[CmdletBinding()]
+﻿function Convert-Base64UrlToBase64 {
+	[CmdletBinding(ConfirmImpact = 'None')]
 	[OutputType([String])]
 	param(
-		[Parameter(Mandatory = $true)]
+		[Parameter(Mandatory = $true, ValueFromPipeline)]
 		[string]$B64Url
 	)
 
-	return $B64Url.Replace('-', '+').Replace('_', '/')
+	process {
+		return $B64Url.Replace('-', '+').Replace('_', '/')
+	}
 }

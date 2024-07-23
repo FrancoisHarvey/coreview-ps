@@ -1,5 +1,5 @@
-function Get-CvContext {
-	[CmdletBinding()]
+﻿function Get-CvContext {
+	[CmdletBinding(ConfirmImpact = 'None')]
 	[OutputType([Hashtable])]
 	param ()
 

@@ -1,5 +1,5 @@
-function Connect-CvAPI {
-	[CmdletBinding()]
+﻿function Connect-CvAPI {
+	[CmdletBinding(ConfirmImpact = 'Low', SupportsShouldProcess)]
 	param (
 		[Parameter(Mandatory = $true)]
 		[string]$APIKey
@@ -21,6 +21,10 @@ function Connect-CvAPI {
 
 	begin {
 		$mutable = @{}
+
+		function CheckIfShouldProcess {
+			return $PSCmdlet.ShouldProcess((Get-Msg 'LoginShouldProcess' $APIKey), 'Connect-CvAPI', 'Script')
+		}
 
 		function InitiateNewSession {
 			$mutable.cvSession = New-CvWebRequestSession $APIKey -ErrorAction Stop
@@ -63,6 +67,9 @@ function Connect-CvAPI {
 		}
 
 		function SaveSessionObject {
+			if (-not (CheckIfShouldProcess)) {
+				Write-WarningMsg OperationCancelled -Stop
+			}
 			$script:CvSessionObject = $mutable.SessionObject
 		}
 

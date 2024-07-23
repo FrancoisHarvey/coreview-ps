@@ -1,5 +1,5 @@
-function Expand-JWTClaims {
-	[CmdletBinding()]
+﻿function Expand-JWTClaims {
+	[CmdletBinding(ConfirmImpact = 'None')]
 	[OutputType([Hashtable])]
 	param(
 		[Parameter(Mandatory = $true)]

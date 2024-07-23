@@ -8,4 +8,7 @@
     "powershell.codeFormatting.useCorrectCasing": true,
     "powershell.integratedConsole.showOnStartup": false,
     "powershell.codeFormatting.autoCorrectAliases": true,
+    "editor.formatOnPaste": true,
+    "editor.formatOnSave": true,
+    "editor.formatOnSaveMode": "file",
 }

@@ -1,10 +1,12 @@
-function Convert-JsonToHashtable {
-	[CmdletBinding()]
+﻿function Convert-JsonToHashtable {
+	[CmdletBinding(ConfirmImpact = 'None')]
 	[OutputType([hashtable])]
 	param(
 		[Parameter(ValueFromPipeline)]
 		[String]$Json
 	)
 
-	return $Json | ConvertFrom-Json -AsHashtable -ErrorAction Stop | ConvertTo-Hashtable -ErrorAction Stop
+	process {
+		return $Json | ConvertFrom-Json -AsHashtable -ErrorAction Stop | ConvertTo-Hashtable -ErrorAction Stop
+	}
 }

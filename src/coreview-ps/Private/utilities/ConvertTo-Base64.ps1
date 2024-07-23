@@ -1,10 +1,12 @@
-function ConvertTo-Base64 {
-	[CmdletBinding()]
+﻿function ConvertTo-Base64 {
+	[CmdletBinding(ConfirmImpact = 'None')]
 	[OutputType([String])]
 	param(
-		[Parameter(Mandatory = $true)]
+		[Parameter(Mandatory = $true, ValueFromPipeline)]
 		[string]$String
 	)
 
-	return [System.Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes($String))
+	process {
+		return [System.Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes($String))
+	}
 }
