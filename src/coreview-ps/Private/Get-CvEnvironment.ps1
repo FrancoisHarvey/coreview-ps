@@ -1,43 +1,131 @@
 $script:CV_ENVIRONMENT_JSON = 'https://app.coreview.com/assets/configuration/environment.json'
 $script:COREVIEW_REGION = 'CAE'
 
+$script:CV_ENVIRONMENT_SCHEMA = @'
+{
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "$ref": "#/definitions/CoreViewEnv",
+    "definitions": {
+        "CoreViewEnv": {
+            "type": "object",
+            "additionalProperties": true,
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "baseAuthUrl": {
+                    "type": "string",
+                    "format": "uri",
+                    "qt-uri-protocols": [
+                        "https"
+                    ]
+                },
+                "baseCommunicationUrl": {
+                    "$ref": "#/definitions/BaseCommunicationURL"
+                },
+                "workflowUrlV2": {
+                    "$ref": "#/definitions/BaseCommunicationURL"
+                },
+                "baseCentralUrl": {
+                    "type": "string",
+                    "format": "uri",
+                    "qt-uri-protocols": [
+                        "https"
+                    ]
+                },
+                "appVersion": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "appVersion",
+                "baseAuthUrl",
+                "baseCentralUrl",
+                "baseCommunicationUrl",
+                "name",
+                "workflowUrlV2"
+            ],
+            "title": "CoreViewEnv"
+        },
+        "BaseCommunicationURL": {
+            "type": "object",
+            "additionalProperties": true,
+            "properties": {
+                "EU": {
+                    "type": "string",
+                    "format": "uri",
+                    "qt-uri-protocols": [
+                        "https"
+                    ]
+                },
+                "EUS": {
+                    "type": "string",
+                    "format": "uri",
+                    "qt-uri-protocols": [
+                        "https"
+                    ]
+                },
+                "CAE": {
+                    "type": "string",
+                    "format": "uri",
+                    "qt-uri-protocols": [
+                        "https"
+                    ]
+                },
+                "AUS": {
+                    "type": "string",
+                    "format": "uri",
+                    "qt-uri-protocols": [
+                        "https"
+                    ]
+                }
+            },
+            "required": [
+                "CAE",
+                "EU",
+                "EUS"
+            ],
+            "title": "BaseCommunicationURL"
+        }
+    }
+}
+'@
 
 function Get-CvEnvironment {
 	<#
 	.SYNOPSIS
-		Obtient la configuration statique d'environnement de CoreView
-
-	.DESCRIPTION
-		Cette configuration permet d'obtenir les URLs à utiliser pour les APIs.
+		Obtains the static environment configuration for CoreView.
 	#>
 	[CmdletBinding()]
 	[OutputType([hashtable])]
 	param ()
 
 	process {
-		if (-not (CacheExiste)) {
-			ObtenirEnvironnementJSON
-			ConvertirEnHashtable
-			ValiderSchema
-			ConvertirUrlsEnObjetsUri
-			CreerCache
+		if (-not (CacheExists)) {
+			FetchEnvFromManagementPortal
+			ValidateAgainstSchema
+			ConvertToHashtable
+			ConvertURLsToUriObjects
+			CreateCache
 		}
 	}
 
 	end {
-		RetournerJson
+		ReturnAsHashtable
 	}
 
 	begin {
 		$mutable = @{
-			ContenuJson = $null
+			JsonContent = $null
 		}
 
-		function CacheExiste {
-			return (Test-Path Variable:script:CacheEnvironnementCv)
+		function CacheExists {
+			return (Test-Path Variable:script:CvEnvironmentCache)
 		}
 
-		function ObtenirEnvironnementJSON {
+		function FetchEnvFromManagementPortal {
+			Write-VerboseMsg FetchingEnvironmentFileFromCoreView
+
 			$req = @{
 				Uri              = $CV_ENVIRONMENT_JSON
 				Method           = 'GET'
@@ -47,57 +135,52 @@ function Get-CvEnvironment {
 			}
 			$reponse = (Invoke-WebRequest @req -ErrorAction Stop)
 
-			if (-not $reponse) {
-				Write-Error 'Impossible d''obtenir le fichier de configuration d''environnement CoreView' -ErrorAction Stop
+			if (-not $reponse -or $reponse.StatusCode -notin 200..299) {
+				Write-ErrorMsg UnableToObtainEnvFileFromCoreView
 			}
 
-			$mutable.ContenuJson = $reponse.Content
+			$mutable.JsonContent = $reponse.Content
 		}
 
-		function ConvertirEnHashtable {
-			$ht = $mutable.ContenuJson | Convert-JsonToHashtable -ErrorAction Stop
+		function ConvertToHashtable {
+			$ht = $mutable.JsonContent | Convert-JsonToHashtable -ErrorAction Stop
 
 			if (-not $ht) {
-				Write-Error 'Le fichier de configuration d''environnement CoreView est malformé' -ErrorAction Stop
+				Write-ErrorMsg UnexpectedDataInCoreViewEnvFile
 			}
 
-			$mutable.ContenuJson = $ht
+			$mutable.JsonContent = $ht
 		}
 
-		function ValiderSchema {
-			Test-HtSchema -ErrorAction Stop -Obj $mutable.ContenuJson -Schema @{
-				baseAuthUrl   = [String]
-				workflowUrlV2 = @{
-					CAE = [String]
-				}
-			} -Contexte "Validation du fichier d'environnement CoreView: ${CV_ENVIRONMENT_JSON}" | Out-Null
+		function ValidateAgainstSchema {
+			Test-Json -ErrorAction Stop -Json $mutable.JsonContent -Schema $CV_ENVIRONMENT_SCHEMA | Out-Null
 		}
 
-		function ConvertirUrlsEnObjetsUri {
-			foreach ($kv in $mutable.ContenuJson.Clone().GetEnumerator()) {
+		function ConvertURLsToUriObjects {
+			foreach ($kv in $mutable.JsonContent.Clone().GetEnumerator()) {
 				if ($kv.Value -is [String] -and $kv.Value.StartsWith('https:')) {
-					$mutable.ContenuJson.($kv.Name) = [Uri]::New($kv.Value)
+					$mutable.JsonContent.($kv.Name) = [Uri]::New($kv.Value)
 				}
 				elseif ($kv.Value -is [Hashtable]) {
 					$kv.Value.Clone().GetEnumerator() | ForEach-Object {
 						if ($_.Value -is [String] -and $_.Value.StartsWith('https:')) {
-							$mutable.ContenuJson.($kv.Name).($_.Name) = [Uri]::New($_.Value)
+							$mutable.JsonContent.($kv.Name).($_.Name) = [Uri]::New($_.Value)
 						}
 					}
 				}
 			}
 		}
 
-		function CreerCache {
-			$script:CacheEnvironnementCv = $mutable.ContenuJson
+		function CreateCache {
+			$script:CvEnvironmentCache = $mutable.JsonContent
 		}
 
-		function RetournerJson {
-			if (-not $script:CacheEnvironnementCv) {
-				Write-Error 'Le cache d''environnement CoreView est vide' -ErrorAction Stop
+		function ReturnAsHashtable {
+			if (-not $script:CvEnvironmentCache) {
+				Write-ErrorMsg CoreViewEnvFileIsEmpty
 			}
 
-			return $script:CacheEnvironnementCv
+			return $script:CvEnvironmentCache
 		}
 	}
 }
