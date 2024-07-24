@@ -13,6 +13,7 @@
 		InitiateNewSession
 		ExtractBearerTokenFromHttpClient
 		ExtractClaimsFromBearerToken
+		AddFromHeaderToHttpClient
 		GenerateSCompanyFromClaims
 		AddSCompanyHeaderToHttpClient
 		CreateSessionObject
@@ -50,6 +51,10 @@
 
 		function ExtractClaimsFromBearerToken {
 			$mutable.JWTContent = Expand-JWTClaims $mutable.bearerToken -ErrorAction Stop
+		}
+
+		function AddFromHeaderToHttpClient {
+			$mutable.httpClient.DefaultRequestHeaders.From = $mutable.JWTContent.email
 		}
 
 		function GenerateSCompanyFromClaims {
