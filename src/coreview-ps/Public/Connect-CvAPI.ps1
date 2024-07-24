@@ -11,10 +11,10 @@
 	process {
 		EnsureApiKeyIsSecureString
 		InitiateNewSession
-		ExtractBearerTokenFromSession
+		ExtractBearerTokenFromHttpClient
 		ExtractClaimsFromBearerToken
 		GenerateSCompanyFromClaims
-		AddSCompanyHeaderToSession
+		AddSCompanyHeaderToHttpClient
 		CreateSessionObject
 		SaveSessionObject
 	}
@@ -37,15 +37,15 @@
 		}
 
 		function InitiateNewSession {
-			$mutable.cvSession = New-CvWebRequestSession $APIKey -ErrorAction Stop
+			$mutable.httpClient = New-CvAuthenticatedHttpClient $APIKey -ErrorAction Stop
 		}
 
 		function DecodeApiKey {
 			return ($APIKey | ConvertFrom-SecureString -AsPlainText).Trim()
 		}
 
-		function ExtractBearerTokenFromSession {
-			$mutable.bearerToken = $mutable.cvSession.Headers.Authorization.Substring(7)
+		function ExtractBearerTokenFromHttpClient {
+			$mutable.bearerToken = $mutable.httpClient.DefaultRequestHeaders.Authorization.ToString().Substring(7)
 		}
 
 		function ExtractClaimsFromBearerToken {
@@ -56,28 +56,28 @@
 			$mutable.SCompany = $mutable.JWTContent.oid + '|' + (ConvertTo-Base64 $mutable.JWTContent.oname) + '--'
 		}
 
-		function AddSCompanyHeaderToSession {
-			if (-not $mutable.cvSession.Headers.ContainsKey('X-SCompany')) {
-				$mutable.cvSession.Headers.Add('X-SCompany', $mutable.SCompany) | Out-Null
+		function AddSCompanyHeaderToHttpClient {
+			if (-not $mutable.httpClient.DefaultRequestHeaders.Contains('X-SCompany')) {
+				$mutable.httpClient.DefaultRequestHeaders.Add('X-SCompany', $mutable.SCompany) | Out-Null
 			}
 		}
 
 		function CreateSessionObject {
 			$mutable.SessionObject = @{
-				webRequestSession = $mutable.cvSession
-				SessionId         = $mutable.JWTContent.skey.Split(':')[2]
-				IssuedAt          = [DateTimeOffset]::FromUnixTimeSeconds([long]$mutable.JWTContent.iat)
-				Expiry            = [DateTimeOffset]::FromUnixTimeSeconds([long]$mutable.JWTContent.exp)
-				SCompany          = $mutable.SCompany
-				CompanyId         = $mutable.JWTContent.oid
-				CompanyName       = $mutable.JWTContent.oname
-				OperatorUserName  = $mutable.JWTContent.preferred_username
-				OperatorUserId    = $mutable.JWTContent.sub
-				OperatorName      = $mutable.JWTContent.name
-				Audience          = $mutable.JWTContent.aud
-				Roles             = $mutable.JWTContent.roles
-				_claims           = $mutable.JWTContent
-				_apiKey           = $APIKey
+				HttpClient       = $mutable.httpClient
+				SessionId        = $mutable.JWTContent.skey.Split(':')[2]
+				IssuedAt         = [DateTimeOffset]::FromUnixTimeSeconds([long]$mutable.JWTContent.iat)
+				Expiry           = [DateTimeOffset]::FromUnixTimeSeconds([long]$mutable.JWTContent.exp)
+				SCompany         = $mutable.SCompany
+				CompanyId        = $mutable.JWTContent.oid
+				CompanyName      = $mutable.JWTContent.oname
+				OperatorUserName = $mutable.JWTContent.preferred_username
+				OperatorUserId   = $mutable.JWTContent.sub
+				OperatorName     = $mutable.JWTContent.name
+				Audience         = $mutable.JWTContent.aud
+				Roles            = $mutable.JWTContent.roles
+				_claims          = $mutable.JWTContent
+				_apiKey          = $APIKey
 			}
 		}
 

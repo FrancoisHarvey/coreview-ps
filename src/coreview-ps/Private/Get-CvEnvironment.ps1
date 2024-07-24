@@ -98,7 +98,10 @@ function Get-CvEnvironment {
 	#>
 	[CmdletBinding(ConfirmImpact = 'Low')]
 	[OutputType([hashtable])]
-	param ()
+	param (
+		[Parameter(Mandatory)]
+		[System.Net.Http.HttpClient]$HttpClient
+	)
 
 	process {
 		if (-not (CacheExists)) {
@@ -120,6 +123,7 @@ function Get-CvEnvironment {
 		}
 
 		function CacheExists {
+			return $false
 			return (Test-Path Variable:script:CvEnvironmentCache)
 		}
 
@@ -127,19 +131,18 @@ function Get-CvEnvironment {
 			Write-VerboseMsg FetchingEnvironmentFileFromCoreView
 
 			$req = @{
-				Uri              = $CV_ENVIRONMENT_JSON
-				Method           = 'GET'
-				UseBasicParsing  = $true
-				DisableKeepAlive = $true
-				TimeoutSec       = 10
+				Endpoint          = $CV_ENVIRONMENT_JSON
+				Method            = 'GET'
+				ReturnRawResponse = $true
+				HttpClient        = $HttpClient
 			}
-			$reponse = (Invoke-WebRequest @req -ErrorAction Stop)
+			$reponse = (Invoke-CvRequest @req -ErrorAction Stop)
 
 			if (-not $reponse -or $reponse.StatusCode -notin 200..299) {
 				Write-ErrorMsg UnableToObtainEnvFileFromCoreView
 			}
 
-			$mutable.JsonContent = $reponse.Content
+			$mutable.JsonContent = $reponse.Content.ReadAsStringAsync().GetAwaiter().GetResult()
 		}
 
 		function ConvertToHashtable {

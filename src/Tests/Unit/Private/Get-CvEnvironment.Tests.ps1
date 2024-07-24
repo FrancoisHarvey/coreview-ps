@@ -19,16 +19,17 @@ InModuleScope 'coreview-ps' {
 		BeforeAll {
 			$WarningPreference = 'SilentlyContinue'
 			$ErrorActionPreference = 'SilentlyContinue'
+			$HttpClient = New-CvHttpClient
 		}
 		Context 'Error' {
 		}
 		Context 'Success' {
 			It 'should return a hashtable' {
-				Should -ActualValue (Get-CvEnvironment) -BeOfType System.Collections.Hashtable
+				Should -ActualValue (Get-CvEnvironment -HttpClient $HttpClient) -BeOfType System.Collections.Hashtable
 			}
 
 			It 'should have the property baseAuthUrl of type Uri' {
-				$env = Get-CvEnvironment
+				$env = Get-CvEnvironment -HttpClient $HttpClient
 				$env.baseAuthUrl | Should -BeOfType System.Uri
 			}
 		}
