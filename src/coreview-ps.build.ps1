@@ -213,7 +213,7 @@ Add-BuildTask FormattingCheck {
 
 	$scriptAnalyzerParams = @{
 		Setting     = 'CodeFormattingStroustrup'
-		ExcludeRule = 'PSUseConsistentWhitespace', 'PSUseConsistentIndentation'
+		ExcludeRule = 'PSUseConsistentWhitespace', 'PSUseConsistentIndentation', 'PSUseDeclaredVarsMoreThanAssignments'
 		Recurse     = $true
 		Verbose     = $false
 	}

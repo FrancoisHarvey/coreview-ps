@@ -69,5 +69,5 @@
 		}
 	}
 
-	ExcludeRules        = 'PSUseShouldProcessForStateChangingFunctions', 'PSUseSingularNouns', 'PSReviewUnusedParameter'
+	ExcludeRules        = 'PSUseShouldProcessForStateChangingFunctions', 'PSUseSingularNouns', 'PSReviewUnusedParameter', 'PSUseDeclaredVarsMoreThanAssignments'
 }

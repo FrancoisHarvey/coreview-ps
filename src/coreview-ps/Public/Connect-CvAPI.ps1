@@ -1,11 +1,15 @@
 ﻿function Connect-CvAPI {
-	[CmdletBinding(ConfirmImpact = 'Low', SupportsShouldProcess)]
+	[CmdletBinding(ConfirmImpact = 'Low', SupportsShouldProcess, DefaultParameterSetName = 'withSecureString')]
 	param (
-		[Parameter(Mandatory = $true)]
-		[string]$APIKey
+		[Parameter(Mandatory = $true, Position = 0, ParameterSetName = 'withSecureString')]
+		[SecureString]$APIKey,
+
+		[Parameter(Mandatory = $true, Position = 0, ParameterSetName = 'withoutSecureString')]
+		[string]$InsecureAPIKey
 	)
 
 	process {
+		EnsureApiKeyIsSecureString
 		InitiateNewSession
 		ExtractBearerTokenFromSession
 		ExtractClaimsFromBearerToken
@@ -22,12 +26,22 @@
 	begin {
 		$mutable = @{}
 
+		function EnsureApiKeyIsSecureString {
+			if ($InsecureAPIKey -or -not $APIKey -or $APIKey -isnot [securestring]) {
+				Write-ErrorMsg ApiKeyMustBeASecureString
+			}
+		}
+
 		function CheckIfShouldProcess {
-			return $PSCmdlet.ShouldProcess((Get-Msg 'LoginShouldProcess' $APIKey), 'Connect-CvAPI', 'Script')
+			return $PSCmdlet.ShouldProcess((Get-Msg 'LoginShouldProcess' (DecodeApiKey)), 'Connect-CvAPI', 'Script')
 		}
 
 		function InitiateNewSession {
 			$mutable.cvSession = New-CvWebRequestSession $APIKey -ErrorAction Stop
+		}
+
+		function DecodeApiKey {
+			return ($APIKey | ConvertFrom-SecureString -AsPlainText).Trim()
 		}
 
 		function ExtractBearerTokenFromSession {
@@ -63,6 +77,7 @@
 				Audience          = $mutable.JWTContent.aud
 				Roles             = $mutable.JWTContent.roles
 				_claims           = $mutable.JWTContent
+				_apiKey           = $APIKey
 			}
 		}
 
@@ -70,7 +85,7 @@
 			if (-not (CheckIfShouldProcess)) {
 				Write-WarningMsg OperationCancelled -Stop
 			}
-			$script:CvSessionObject = $mutable.SessionObject
+			$script:CvSessionObject = $mutable.SessionObject.Clone()
 		}
 
 		function PrintSuccessMessage {

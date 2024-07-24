@@ -1,4 +1,5 @@
 ﻿ConvertFrom-StringData -StringData @'
+ApiKeyMustBeASecureString = La clé d'API doit être de type SecureString. Veuillez convertir la clé à l'aide du cmdlet ConvertTo-SecureString
 ContextInfoCompanyId = ID de la compagnie
 ContextInfoCompanyName = Nom de la compagnie
 ContextInfoCoreViewSection = Informations sur CoreView
@@ -25,9 +26,11 @@ LoginShouldProcess = Déconnexion de toute connexion API précédente et connexi
 LoginSuccess = Connexion réussie à CoreView en tant que '{0}'
 MsgKeyNotFound = La clé de message '{0}' n'existe pas dans la table de messages pour fr-CA.
 OperationCancelled = L'opération a été annulée par l'utilisateur
+RefreshingJWT = La session a expiré. Tentative d'ouverture d'une nouvelle session avec la même clé d'API...
 RunCvContextForInfo = Vous pouvez exécuter la commande 'Get-CvSessionInfo' pour obtenir des détails sur la session actuelle
 SendingLoginRequestToCoreView = Envoi d'une demande de connexion à CoreView
 SessionNotInitialized = La session n'a pas été initialisée. Veuillez exécuter la commande 'Connect-CvAPI' pour vous connecter à CoreView
+SessionSuccessfullyRefreshed = La session a été réinitialisée avec succès.
 UnableToObtainEnvFileFromCoreView = Impossible d'obtenir le fichier de configuration d'environnement CoreView
 UnexpectedDataInCoreViewEnvFile = Données inattendues dans le fichier de configuration d'environnement CoreView. Veuillez mettre à jour le schéma JSON.
 '@

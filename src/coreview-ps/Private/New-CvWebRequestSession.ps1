@@ -7,7 +7,7 @@
 	[OutputType([Microsoft.PowerShell.Commands.WebRequestSession])]
 	param(
 		[Parameter(Mandatory, Position = 1)]
-		[String]$APIKey
+		[securestring]$APIKey
 	)
 
 	process {
@@ -24,7 +24,6 @@
 	}
 
 	begin {
-		$APIKey = $APIKey.Trim()
 		$mutable = @{}
 
 		function GetLoginEndpointURL {
@@ -50,7 +49,7 @@
 				Headers          = @{
 					Accept           = 'application/json;charset=utf-8'
 					'Accept-Charset' = 'utf-8'
-					Authorization    = "Bearer $APIKey"
+					Authorization    = "Bearer $(DecodeApiKey)"
 					'Content-Length' = 0
 				}
 				SessionVariable  = 'cvSession'
@@ -61,6 +60,10 @@
 			Write-VerboseMsg SendingLoginRequestToCoreView
 			$mutable.webRequestSession = $cvSession
 			return (Invoke-WebRequest @params -ErrorAction Stop)
+		}
+
+		function DecodeApiKey {
+			return ($APIKey | ConvertFrom-SecureString -AsPlainText).Trim()
 		}
 
 		function HandleErrorResponse ($err) {
