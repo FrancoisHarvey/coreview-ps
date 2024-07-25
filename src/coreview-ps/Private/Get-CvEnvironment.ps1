@@ -1,5 +1,4 @@
 ﻿$script:CV_ENVIRONMENT_JSON = 'https://app.coreview.com/assets/configuration/environment.json'
-$script:COREVIEW_REGION = 'CAE'
 
 $script:CV_ENVIRONMENT_SCHEMA = @'
 {
@@ -123,7 +122,6 @@ function Get-CvEnvironment {
 		}
 
 		function CacheExists {
-			return $false
 			return (Test-Path Variable:script:CvEnvironmentCache)
 		}
 

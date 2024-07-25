@@ -6,10 +6,22 @@
 
 	$info = [ordered]@{
 		'ContextInfoCoreViewSection'    = [ordered]@{
+			'ContextInfoConfigUrl'        = $script:CV_ENVIRONMENT_JSON
 			'ContextInfoPortalAppName'    = $context.PortalAppName
 			'ContextInfoPortalAppVersion' = $context.PortalAppVersion
-			'ContextInfoCompanyName'      = $context.CompanyName
-			'ContextInfoCompanyId'        = $context.CompanyId
+			'ContextInfoApiUrl'           = $context.ApiUrl
+			'ContextInfoCoreFlowUrl'      = $context.CoreFlowUrl
+		}
+		'ContextInfoCompanySection'     = [ordered]@{
+			'ContextInfoTenantId'             = $context.TenantId
+			'ContextInfoCompanyName'          = $context.CompanyName
+			'ContextInfoCompanyId'            = $context.CompanyId
+			'ContextInfoDatacenter'           = $context.Datacenter
+			'ContextInfoOrgIdentity'          = $context.OrgIdentity
+			'ContextInfoOrgType'              = $context.OrgType
+			'ContextInfoOrgSubscriptionLevel' = $context.OrgSubscriptionLevel
+			'ContextInfoOrgRoles'             = $context.OrgRoles -join ', '
+			'ContextInfoOrgPortalSkus'        = $context.OrgPortalSkus -join ', '
 		}
 		'ContextInfoOperatorSection'    = [ordered]@{
 			'ContextInfoOperatorUserId'   = $context.OperatorUserId

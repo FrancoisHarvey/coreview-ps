@@ -16,6 +16,8 @@
 		AddFromHeaderToHttpClient
 		GenerateSCompanyFromClaims
 		AddSCompanyHeaderToHttpClient
+		ObtainOrganizationInfo
+		ExtractAPIUrls
 		CreateSessionObject
 		SaveSessionObject
 	}
@@ -67,22 +69,50 @@
 			}
 		}
 
+		function ObtainOrganizationInfo {
+			Write-VerboseMsg ObtainingOrganizationInfo
+			$params = @{
+				HttpClient = $mutable.httpClient
+				Endpoint   = [Uri]::new((GetEnvironment).baseCentralUrl, "api/organization/check")
+			}
+			$mutable.orgInfo = Invoke-CvRequest @params
+		}
+
+		function ExtractAPIUrls {
+			$mutable.APIUrl = [Uri]$mutable.orgInfo.apiUrl
+			$mutable.Datacenter = $mutable.orgInfo.dataCenter
+			$mutable.CoreFlowAPIUrl = (GetEnvironment).workflowUrlV2.($mutable.Datacenter)
+		}
+
+		function GetEnvironment {
+			return Get-CvEnvironment -HttpClient $mutable.httpClient
+		}
+
 		function CreateSessionObject {
 			$mutable.SessionObject = @{
-				HttpClient       = $mutable.httpClient
-				SessionId        = $mutable.JWTContent.skey.Split(':')[2]
-				IssuedAt         = [DateTimeOffset]::FromUnixTimeSeconds([long]$mutable.JWTContent.iat)
-				Expiry           = [DateTimeOffset]::FromUnixTimeSeconds([long]$mutable.JWTContent.exp)
-				SCompany         = $mutable.SCompany
-				CompanyId        = $mutable.JWTContent.oid
-				CompanyName      = $mutable.JWTContent.oname
-				OperatorUserName = $mutable.JWTContent.preferred_username
-				OperatorUserId   = $mutable.JWTContent.sub
-				OperatorName     = $mutable.JWTContent.name
-				Audience         = $mutable.JWTContent.aud
-				Roles            = $mutable.JWTContent.roles
-				_claims          = $mutable.JWTContent
-				_apiKey          = $APIKey
+				HttpClient           = $mutable.httpClient
+				SessionId            = $mutable.JWTContent.skey.Split(':')[2]
+				IssuedAt             = [DateTimeOffset]::FromUnixTimeSeconds([long]$mutable.JWTContent.iat)
+				Expiry               = [DateTimeOffset]::FromUnixTimeSeconds([long]$mutable.JWTContent.exp)
+				SCompany             = $mutable.SCompany
+				TenantId             = $mutable.orgInfo.tenantID
+				CompanyId            = $mutable.JWTContent.oid
+				CompanyName          = $mutable.orgInfo.displayName
+				OrgIdentity          = $mutable.orgInfo.identity
+				OrgType              = $mutable.orgInfo.organizationType
+				OrgSubscriptionLevel = $mutable.orgInfo.subscriptionLevel
+				OrgRoles             = $mutable.orgInfo.organizationRoles
+				OrgPortalSkus        = $mutable.orgInfo.portalSkus
+				OperatorUserName     = $mutable.JWTContent.preferred_username
+				OperatorUserId       = $mutable.JWTContent.sub
+				OperatorName         = $mutable.JWTContent.name
+				OperatorRoles        = $mutable.JWTContent.roles
+				Audience             = $mutable.JWTContent.aud
+				ApiURL               = $mutable.APIUrl
+				CoreFlowUrl          = $mutable.CoreFlowAPIUrl
+				Datacenter           = $mutable.Datacenter
+				_claims              = $mutable.JWTContent
+				_apiKey              = $APIKey
 			}
 		}
 
