@@ -1,15 +1,34 @@
 ﻿function Connect-CvAPI {
-	[CmdletBinding(ConfirmImpact = 'Low', SupportsShouldProcess, DefaultParameterSetName = 'withSecureString')]
-	param (
-		[Parameter(Mandatory = $true, Position = 0, ParameterSetName = 'withSecureString')]
-		[SecureString]$APIKey,
+	<#
+	.SYNOPSIS
+	Connects to the CoreView API using the specified API key.
 
-		[Parameter(Mandatory = $true, Position = 0, ParameterSetName = 'withoutSecureString')]
-		[string]$InsecureAPIKey
+	.DESCRIPTION
+	The Connect-CvAPI cmdlet is used to connect to the CoreView API using the
+	specified API key. The API key must be provided as a SecureString. Once
+	connected, the -Cv cmdlets can be used to interact with the CoreView
+	4ward365 API and the CoreView CoreFlow API.
+
+	.PARAMETER APIKey
+	Specifies the API key to use to connect to the CoreView API. The API key
+	must be provided as a SecureString.
+
+	.OUTPUTS
+	None
+
+	.EXAMPLE
+	PS> Connect-CvAPI -APIKey (ConvertTo-SecureString -String 'my-api-key' -AsPlainText -Force)
+
+	.EXAMPLE
+	PS> Connect-CvAPI -APIKey $SecureAPIKey
+	#>
+	[CmdletBinding(ConfirmImpact = 'Low', SupportsShouldProcess)]
+	param (
+		[Parameter(Mandatory = $true, Position = 0)]
+		[SecureString]$APIKey
 	)
 
 	process {
-		EnsureApiKeyIsSecureString
 		InitiateNewSession
 		ExtractBearerTokenFromHttpClient
 		ExtractClaimsFromBearerToken
@@ -28,12 +47,6 @@
 
 	begin {
 		$mutable = @{}
-
-		function EnsureApiKeyIsSecureString {
-			if ($InsecureAPIKey -or -not $APIKey -or $APIKey -isnot [securestring]) {
-				Write-ErrorMsg ApiKeyMustBeASecureString
-			}
-		}
 
 		function CheckIfShouldProcess {
 			return $PSCmdlet.ShouldProcess((Get-Msg 'LoginShouldProcess' (DecodeApiKey)), 'Connect-CvAPI', 'Script')

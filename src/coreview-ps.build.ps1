@@ -425,7 +425,14 @@ Add-BuildTask CreateMarkdownHelp -After CreateHelpStart {
 # Synopsis: Build the external xml help file from markdown help files with PlatyPS
 Add-BuildTask CreateExternalHelp -After CreateMarkdownHelp {
 	Write-Build Gray '           Creating external xml help file...'
-	$null = New-ExternalHelp "$script:ArtifactsPath\docs" -OutputPath "$script:ArtifactsPath\en-US\" -Force
+	$ModulePage = "$script:ArtifactsPath\docs\$($ModuleName).md"
+	(Get-Content -Path $ModulePage) | ForEach-Object {
+		$_
+		if ($_.ReadCount -eq 1) {
+			"Applicable: ignore"
+		}
+	} | Set-Content -Path $ModulePage
+	$null = New-ExternalHelp "$script:ArtifactsPath\docs" -OutputPath "$script:ArtifactsPath\en-US\" -Force -ApplicableTag @('a')
 	Write-Build Gray '           ...External xml help file created!'
 } #CreateExternalHelp
 
@@ -445,8 +452,8 @@ Add-BuildTask UpdateCBH -After AssetCopy {
 	Get-ChildItem -Path "$script:ArtifactsPath\Public\*.ps1" -File | ForEach-Object {
 		$FormattedOutFile = $_.FullName
 		Write-Output "      Replacing CBH in file: $($FormattedOutFile)"
-		$UpdatedFile = (Get-Content  $FormattedOutFile -Raw) -replace $CBHPattern, $ExternalHelp
-		$UpdatedFile | Out-File -FilePath $FormattedOutFile -Force -Encoding:utf8
+		#$UpdatedFile = (Get-Content  $FormattedOutFile -Raw) -replace $CBHPattern, $ExternalHelp
+		#$UpdatedFile | Out-File -FilePath $FormattedOutFile -Force -Encoding:utf8
 	}
 } #UpdateCBH
 
