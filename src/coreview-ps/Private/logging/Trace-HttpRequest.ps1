@@ -26,8 +26,13 @@ function Trace-HttpRequest {
 				[void]$debugMessage.AppendLine("$($header.Key): $($header.Value -join '; ')")
 			}
 		}
-		[void]$debugMessage.AppendLine()
-		[void]$debugMessage.Append($Request.Content.ReadAsStringAsync().GetAwaiter().GetResult())
+
+		$stringContent = $Request.Content.ReadAsStringAsync().GetAwaiter().GetResult()
+
+		if ($stringContent) {
+			[void]$debugMessage.AppendLine()
+			[void]$debugMessage.Append($stringContent)
+		}
 	}
 
 	[void]$debugMessage.AppendLine()

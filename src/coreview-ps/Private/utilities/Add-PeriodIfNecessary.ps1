@@ -6,8 +6,10 @@ function Add-PeriodIfNecessary {
 		[string]$Msg
 	)
 
-	if (($msg.ToCharArray() | Select-Object -Last 1) -notin '?', '.', '!') {
-		$msg += '.'
+	$trimmedMsg = $msg.TrimEnd()
+
+	if (($trimmedMsg.ToCharArray() | Select-Object -Last 1) -notin '?', '.', '!') {
+		$msg = $trimmedMsg + '.' + $msg.Substring($trimmedMsg.Length)
 	}
 
 	return $msg

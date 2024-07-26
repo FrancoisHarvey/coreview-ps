@@ -42,15 +42,28 @@ function Invoke-CvRequest {
 			# Send request and get response
 			$response = $HttpClient.SendAsync($request).GetAwaiter().GetResult()
 
-			# Log response
-			Trace-HttpResponse -Response $response
-
 			# Handle cookies
 			$cookieHeader = [string[]]''
 			if ($response.Headers.TryGetValues("Set-Cookie", [ref]$cookieHeader)) {
 				[void]$HttpClient.DefaultRequestHeaders.Remove("Cookie")
 				[void]$HttpClient.DefaultRequestHeaders.Add("Cookie", $cookieHeader)
 			}
+
+			# Handle HTTP error codes
+			if ($response.StatusCode -ge 400 -and $response.StatusCode -lt 600) {
+				$statusCode = [int]$response.StatusCode
+				$statusDescription = $response.StatusCode.ToString()
+				$errorMessage = "HTTP ${statusCode}: $statusDescription"
+				if ($response.Content) {
+					$content = $response.Content.ReadAsStringAsync().GetAwaiter().GetResult()
+					$errorMessage += "`n$content"
+				}
+				Trace-HttpResponse -Response $response -Debug
+				throw [System.Net.Http.HttpRequestException]::new($errorMessage)
+			}
+
+			# Log response
+			Trace-HttpResponse -Response $response
 
 			if ($ReturnRawResponse) {
 				return $response

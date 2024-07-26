@@ -1,4 +1,4 @@
-﻿#-------------------------------------------------------------------------
+#-------------------------------------------------------------------------
 Set-Location -Path $PSScriptRoot
 #-------------------------------------------------------------------------
 $ModuleName = 'coreview-ps'
@@ -15,27 +15,27 @@ InModuleScope 'coreview-ps' {
 	#-------------------------------------------------------------------------
 	$WarningPreference = "SilentlyContinue"
 	#-------------------------------------------------------------------------
-	Describe 'Get-CvEnvironment Private Function Tests' -Tag Unit {
+	Describe 'i18n System Tests' -Tag Unit {
 		BeforeAll {
 			$WarningPreference = 'SilentlyContinue'
 			$ErrorActionPreference = 'SilentlyContinue'
-			$HttpClient = New-CvHttpClient
+
+			$i18nBaseDirectory = $PSScriptRoot + '\..\..\..\coreview-ps\i18n'
+			$mainCulture = 'en-US'
+			$otherCultures = [string[]]((Get-ChildItem -Directory -Path $i18nBaseDirectory -Exclude $mainCulture).Name)
 		}
 		Context 'Error' {
-			It 'should return an error message on 404' {
-				$CV_ENVIRONMENT_JSON = 'http://127.0.0.1:404'
-				{ Get-CvEnvironment -HttpClient $HttpClient } | Should -Throw
-				$CV_ENVIRONMENT_JSON = 'https://app.coreview.com/assets/configuration/environment.json'
-			}
 		}
 		Context 'Success' {
-			It 'should return a hashtable' {
-				Should -ActualValue (Get-CvEnvironment -HttpClient $HttpClient) -BeOfType System.Collections.Hashtable
-			}
+			It 'should define the same number of strings for each language' {
+				Import-LocalizedData -BaseDirectory $i18nBaseDirectory -FileName 'i18n.psd1' -BindingVariable msgTable -UICulture $mainCulture
 
-			It 'should have the property baseAuthUrl of type Uri' {
-				$env = Get-CvEnvironment -HttpClient $HttpClient
-				$env.baseAuthUrl | Should -BeOfType System.Uri
+				foreach ($otherCulture in $otherCultures) {
+					$localizedMsgTable = @{}
+					Import-LocalizedData -BaseDirectory $i18nBaseDirectory -FileName 'i18n.psd1' -BindingVariable localizedMsgTable -UICulture $otherCulture -ErrorAction Stop
+
+					$localizedMsgTable.Count | Should -BeExactly $msgTable.Count -Because "$otherCulture should contain the same number of lines as $mainCulture"
+				}
 			}
 		}
 	}

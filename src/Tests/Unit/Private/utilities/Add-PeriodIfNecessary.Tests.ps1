@@ -2,7 +2,7 @@
 Set-Location -Path $PSScriptRoot
 #-------------------------------------------------------------------------
 $ModuleName = 'coreview-ps'
-$PathToManifest = [System.IO.Path]::Combine('..', '..', '..', $ModuleName, "$ModuleName.psd1")
+$PathToManifest = [System.IO.Path]::Combine('..', '..', '..', '..', $ModuleName, "$ModuleName.psd1")
 #-------------------------------------------------------------------------
 if (Get-Module -Name $ModuleName -ErrorAction 'SilentlyContinue') {
 	#if the module is already in memory, remove it
@@ -15,27 +15,33 @@ InModuleScope 'coreview-ps' {
 	#-------------------------------------------------------------------------
 	$WarningPreference = "SilentlyContinue"
 	#-------------------------------------------------------------------------
-	Describe 'Get-CvEnvironment Private Function Tests' -Tag Unit {
+	Describe 'Add-PeriodIfNecessary Private Function Tests' -Tag Unit {
 		BeforeAll {
 			$WarningPreference = 'SilentlyContinue'
 			$ErrorActionPreference = 'SilentlyContinue'
-			$HttpClient = New-CvHttpClient
 		}
 		Context 'Error' {
-			It 'should return an error message on 404' {
-				$CV_ENVIRONMENT_JSON = 'http://127.0.0.1:404'
-				{ Get-CvEnvironment -HttpClient $HttpClient } | Should -Throw
-				$CV_ENVIRONMENT_JSON = 'https://app.coreview.com/assets/configuration/environment.json'
+			It 'should not add periods to strings ending with a period' {
+				$msg = Add-PeriodIfNecessary 'foo.'
+				$msg | Should -BeExactly 'foo.'
+			}
+			It 'should not add periods to strings ending with a question mark' {
+				$msg = Add-PeriodIfNecessary 'foo?'
+				$msg | Should -BeExactly 'foo?'
+			}
+			It 'should not add periods to strings ending with an exclamation mark' {
+				$msg = Add-PeriodIfNecessary 'foo!'
+				$msg | Should -BeExactly 'foo!'
+			}
+			It 'should not add periods to strings ending with a period and then whitespace' {
+				$msg = Add-PeriodIfNecessary 'foo. '
+				$msg | Should -BeExactly 'foo. '
 			}
 		}
 		Context 'Success' {
-			It 'should return a hashtable' {
-				Should -ActualValue (Get-CvEnvironment -HttpClient $HttpClient) -BeOfType System.Collections.Hashtable
-			}
-
-			It 'should have the property baseAuthUrl of type Uri' {
-				$env = Get-CvEnvironment -HttpClient $HttpClient
-				$env.baseAuthUrl | Should -BeOfType System.Uri
+			It 'should a period to strings without terminating punctuation' {
+				$msg = Add-PeriodIfNecessary 'foo'
+				$msg | Should -BeExactly 'foo.'
 			}
 		}
 	}
