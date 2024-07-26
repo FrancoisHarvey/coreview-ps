@@ -2,39 +2,23 @@
 
 ## Synopsis
 
-<!-- Enter a synopsis -->
+This module facilitates interacting with CoreView's APIs.
 
 ## Description
 
-<!-- Enter a description -->
+This is a PowerShell 7 library that allows starting CoreView CoreFlow workflows,
+monitoring them, and generally interacting with CoreView's APIs.
 
-## Why
-
-<!-- Short reason you created the project -->
+- Easily execute workflows in batches.
+- Migrate workflows, actions and lists from one CoreView environment to another.
 
 ## Getting Started
 
 ### Prerequisites
 
-<!-- list any prerequisites -->
+- PowerShell 7
+- Dotnet runtime 8+
 
-### Installation
+### Documentation
 
-```powershell
-# how to install coreview-ps
-
-```
-
-### Quick start
-
-#### Example1
-
-```powershell
-# command showing how to use your project
-
-```
-
-## Author
-
-MSSS
-
+See https://coreview-ps.pages.dev
