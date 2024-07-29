@@ -66,8 +66,12 @@
 		ModuleVersion        = $module.Version
 		OperatorName         = $session.OperatorName
 		OperatorRoles        = $session.OperatorRoles
+		OperatorDirectRoles  = $session.OperatorDirectRoles
+		OperatorRoleGroups   = $session.OperatorRoleGroups
 		OperatorUserId       = $session.OperatorUserId
 		OperatorUserName     = $session.OperatorUserName
+		OperatorVTenants     = $session.OperatorVTenants
+		OperatorLanguage     = $session.OperatorLanguage
 		PortalAppName        = $env.name
 		PortalAppVersion     = $env.appVersion
 		PSHostVersion        = $PSVersionTable.PSVersion

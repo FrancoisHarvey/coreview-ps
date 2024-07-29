@@ -6,10 +6,13 @@ function Get-Msg {
 		[string]$MsgKey,
 
 		[parameter(mandatory = $false, position = 1, ValueFromRemainingArguments = $true)]
-		$Substitutions = [System.Collections.ArrayList]::new()
+		$Substitutions = [System.Collections.ArrayList]::new(),
+
+		[parameter()]
+		[switch]$AllowNotFound = $false
 	)
 
-	if (-not $msgTable.ContainsKey($MsgKey)) {
+	if (-not $msgTable.ContainsKey($MsgKey) -and -not $AllowNotFound) {
 		Write-ErrorMsg 'MsgKeyNotFound' $MsgKey
 	}
 

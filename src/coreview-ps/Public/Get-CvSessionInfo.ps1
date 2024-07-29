@@ -49,6 +49,8 @@
 			'ContextInfoOperatorUserName' = $context.OperatorUserName
 			'ContextInfoOperatorName'     = $context.OperatorName
 			'ContextInfoOperatorRoles'    = $context.OperatorRoles -join ', '
+			'ContextInfoOperatorVTenants' = $context.OperatorVTenants -join ', '
+			'ContextInfoOperatorLanguage' = $context.OperatorLanguage
 		}
 		'ContextInfoSessionSection'     = [ordered]@{
 			'ContextInfoSessionId'       = $context.SessionId

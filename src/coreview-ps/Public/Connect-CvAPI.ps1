@@ -37,6 +37,7 @@
 		AddSCompanyHeaderToHttpClient
 		ObtainOrganizationInfo
 		ExtractAPIUrls
+		ObtainOperatorInfo
 		CreateSessionObject
 		SaveSessionObject
 	}
@@ -101,6 +102,15 @@
 			return Get-CvEnvironment -HttpClient $mutable.httpClient
 		}
 
+		function ObtainOperatorInfo {
+			Write-VerboseMsg ObtainingOperatorInfo
+			$params = @{
+				HttpClient = $mutable.httpClient
+				Endpoint   = [Uri]::new($mutable.APIUrl, "api/register")
+			}
+			$mutable.operatorInfo = Invoke-CvRequest @params
+		}
+
 		function CreateSessionObject {
 			$mutable.SessionObject = @{
 				HttpClient           = $mutable.httpClient
@@ -120,6 +130,10 @@
 				OperatorUserId       = $mutable.JWTContent.sub
 				OperatorName         = $mutable.JWTContent.name
 				OperatorRoles        = $mutable.JWTContent.roles
+				OperatorDirectRoles  = $mutable.operatorInfo.roles
+				OperatorRoleGroups   = $mutable.operatorInfo.roleGroups
+				OperatorVTenants     = $mutable.operatorInfo.userGroupMemberships
+				OperatorLanguage     = $mutable.operatorInfo.preferredLanguage
 				Audience             = $mutable.JWTContent.aud
 				ApiURL               = $mutable.APIUrl
 				CoreFlowUrl          = $mutable.CoreFlowAPIUrl
