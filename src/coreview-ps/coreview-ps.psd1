@@ -73,13 +73,15 @@
 	FunctionsToExport    = @(
 		'Connect-CvAPI',
 		'Get-CvCfCustomList',
+		'Get-CvCfFlowExecution',
 		'Get-CvCfFlowInputParameters',
 		'Get-CvContext',
 		'Get-CvOperator',
 		'Get-CvSessionInfo',
 		'Invoke-CvCfRestMethod',
 		'Invoke-CvRestMethod',
-		'New-CvCfFlowExecution'
+		'New-CvCfFlowExecution',
+		'Wait-CvCfFlowExecution'
 	)
 
 	# Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
