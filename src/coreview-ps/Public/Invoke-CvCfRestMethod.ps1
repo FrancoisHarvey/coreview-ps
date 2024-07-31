@@ -49,8 +49,9 @@ function Invoke-CvCfRestMethod {
 	[OutputType([string], ParameterSetName = 'AsText')]
 	[CmdletBinding(ConfirmImpact = 'Low', DefaultParameterSetName = 'AsHashtable')]
 	param (
-		[Parameter(Mandatory)]
-		[string]$Endpoint,
+		[Parameter(Mandatory, Position = 0)]
+		[ValidateScript({ -not $_.IsAbsoluteUri }, ErrorMessage = "The endpoint should not be an absolute URL.")]
+		[Uri]$Endpoint,
 
 		[Parameter()]
 		[Microsoft.PowerShell.Commands.WebRequestMethod]$Method = [Microsoft.PowerShell.Commands.WebRequestMethod]::Get,

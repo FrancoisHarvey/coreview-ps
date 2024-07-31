@@ -119,7 +119,8 @@ function Get-CvCfFlowInputParameters {
 	#>
 	[CmdletBinding()]
 	param (
-		[Parameter(Mandatory = $true)]
+		[Parameter(Mandatory = $true, Position = 0)]
+		[ValidateScript({ $_ -ne [Guid]::Empty }, ErrorMessage = 'The FlowId parameter must be a valid GUID.')]
 		[Guid]$FlowId
 	)
 

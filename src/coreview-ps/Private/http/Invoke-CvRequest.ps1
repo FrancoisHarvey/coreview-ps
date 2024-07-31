@@ -1,14 +1,25 @@
 function Invoke-CvRequest {
 	[CmdletBinding()]
 	param(
+		[Parameter()]
 		[Microsoft.PowerShell.Commands.WebRequestMethod]$Method = [Microsoft.PowerShell.Commands.WebRequestMethod]::Get,
+
 		[Parameter(Mandatory)]
 		[Uri]$Endpoint,
+
+		[Parameter()]
 		[Hashtable]$SearchParams,
+
 		[Parameter(Mandatory)]
 		[System.Net.Http.HttpClient]$HttpClient,
+
+		[Parameter()]
 		[Hashtable]$Body,
+
+		[Parameter()]
 		[Hashtable]$ExtraHeaders,
+
+		[Parameter()]
 		[switch]$ReturnRawResponse
 	)
 

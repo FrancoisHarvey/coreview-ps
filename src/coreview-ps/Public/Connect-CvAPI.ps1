@@ -25,6 +25,7 @@
 	[CmdletBinding(ConfirmImpact = 'Low', SupportsShouldProcess)]
 	param (
 		[Parameter(Mandatory = $true, Position = 0)]
+		[ValidateNotNull()]
 		[SecureString]$APIKey
 	)
 

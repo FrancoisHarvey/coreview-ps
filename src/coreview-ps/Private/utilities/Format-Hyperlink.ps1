@@ -7,6 +7,7 @@ function Format-Hyperlink {
 		[Uri] $Uri,
 
 		[Parameter(Mandatory = $false, Position = 1)]
+		[ValidateNotNullOrWhiteSpace()]
 		[string] $Label
 	)
 

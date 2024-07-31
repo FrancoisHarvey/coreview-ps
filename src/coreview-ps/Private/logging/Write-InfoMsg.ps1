@@ -3,6 +3,7 @@ function Write-InfoMsg {
 	Param
 	(
 		[parameter(mandatory = $true, position = 0)]
+		[ValidateNotNullOrWhiteSpace()]
 		[string]$MsgKey,
 
 		[parameter(mandatory = $false, position = 1, ValueFromRemainingArguments = $true)]

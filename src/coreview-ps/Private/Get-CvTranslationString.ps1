@@ -2,6 +2,7 @@ function Get-CvTranslationString {
 	[CmdletBinding()]
 	param (
 		[Parameter(Mandatory = $true)]
+		[ValidateNotNullOrWhiteSpace()]
 		[string]$Key
 	)
 

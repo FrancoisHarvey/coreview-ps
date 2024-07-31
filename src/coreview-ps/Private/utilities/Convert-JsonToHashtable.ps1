@@ -3,6 +3,7 @@
 	[OutputType([hashtable])]
 	param(
 		[Parameter(ValueFromPipeline)]
+		[ValidateNotNullOrWhiteSpace()]
 		[String]$Json
 	)
 

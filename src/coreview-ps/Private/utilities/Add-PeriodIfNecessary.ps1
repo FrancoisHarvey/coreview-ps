@@ -3,6 +3,7 @@ function Add-PeriodIfNecessary {
 	Param
 	(
 		[parameter(mandatory = $true, position = 0)]
+		[ValidateNotNullOrWhiteSpace()]
 		[string]$Msg
 	)
 

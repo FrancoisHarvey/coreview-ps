@@ -20,10 +20,11 @@ function New-CvCfFlowExecution {
 	[CmdletBinding()]
 	[OutputType([guid])]
 	param(
-		[Parameter(Mandatory)]
+		[Parameter(Mandatory, Position = 0)]
+		[ValidateScript({ $_ -ne [Guid]::Empty }, ErrorMessage = 'The FlowId parameter must be a valid GUID.')]
 		[Guid]$FlowId,
 
-		[Parameter(Mandatory)]
+		[Parameter(Mandatory, Position = 1)]
 		[hashtable]$InputParameters
 	)
 

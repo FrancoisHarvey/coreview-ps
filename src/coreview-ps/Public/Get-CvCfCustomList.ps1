@@ -3,7 +3,8 @@ $script:CustomListCache = @{}
 function Get-CvCfCustomList {
 	[CmdletBinding()]
 	param (
-		[Parameter(Mandatory = $true)]
+		[Parameter(Mandatory = $true, Position = 0)]
+		[ValidateScript({ $_ -ne [Guid]::Empty }, ErrorMessage = 'The ListId parameter must be a valid GUID.')]
 		[Guid]$ListId,
 
 		[Parameter()]

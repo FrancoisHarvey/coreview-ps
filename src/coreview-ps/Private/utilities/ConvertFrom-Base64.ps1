@@ -3,6 +3,7 @@
 	[OutputType([String])]
 	param(
 		[Parameter(Mandatory = $true, ValueFromPipeline)]
+		[ValidateNotNullOrWhiteSpace()]
 		[string]$Base64
 	)
 

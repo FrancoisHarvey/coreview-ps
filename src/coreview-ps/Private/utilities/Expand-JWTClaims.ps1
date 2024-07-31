@@ -3,6 +3,8 @@
 	[OutputType([Hashtable])]
 	param(
 		[Parameter(Mandatory = $true)]
+		[ValidateNotNullOrWhiteSpace()]
+		[ValidatePattern('^[a-zA-Z0-9-_]+\.[a-zA-Z0-9-_]+\.[a-zA-Z0-9-_]*$')]
 		[string]$JWT
 	)
 
