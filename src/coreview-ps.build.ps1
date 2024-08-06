@@ -556,13 +556,23 @@ Add-BuildTask Archive {
 
 	$null = New-Item -Path $archivePath -ItemType Directory -Force
 
-	$zipFileName = '{0}_{1}_{2}.{3}.zip' -f $script:ModuleName, $script:ModuleVersion, ([DateTime]::UtcNow.ToString("yyyyMMdd")), ([DateTime]::UtcNow.ToString("hhmmss"))
+	$tempDir = New-Item -ItemType Directory -Path (Join-Path ([System.IO.Path]::GetTempPath()) (New-Guid))
+
+	# Copy the desired files and directory to the temporary directory
+	Copy-Item -Path "$script:ArtifactsPath\coreview-ps.psd1" -Destination $tempDir.FullName -Force
+	Copy-Item -Path "$script:ArtifactsPath\coreview-ps.psm1" -Destination $tempDir.FullName -Force
+	Copy-Item -Path "$script:ArtifactsPath\i18n" -Destination $tempDir.FullName -Recurse -Force
+
+	$zipFileName = '{0}.zip' -f $script:ModuleName
 	$zipFile = Join-Path -Path $archivePath -ChildPath $zipFileName
 
 	if ($PSEdition -eq 'Desktop') {
 		Add-Type -AssemblyName 'System.IO.Compression.FileSystem'
 	}
-	[System.IO.Compression.ZipFile]::CreateFromDirectory($script:ArtifactsPath, $zipFile)
+	[System.IO.Compression.ZipFile]::CreateFromDirectory($tempDir.FullName, $zipFile)
+
+	# Clean up the temporary directory
+	$null = Remove-Item -Path $tempDir.FullName -Recurse -Force
 
 	Write-Build Green '        ...Archive Complete!'
 } #Archive

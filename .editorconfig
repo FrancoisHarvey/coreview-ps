@@ -14,6 +14,10 @@ insert_final_newline = true
 [*.{json,json.exemple,md}]
 indent_style = space
 
+[*.{yml,yaml}]
+indent_style = space
+indent_size = 2
+
 [*.{ps1,psm1,psd1,ps1xml,pssc,psrc,cdxml}]
 # PowerShell doit être en UTF-8 avec BOM
 charset = utf-8-bom
