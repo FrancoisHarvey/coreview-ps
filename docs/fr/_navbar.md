@@ -1,0 +1,3 @@
+- _![icône de langue](../img/i18n.svg)_ Langue: français
+  - [English](/en/)
+  - [**Français**](/fr/)

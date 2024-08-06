@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+	<meta charset="UTF-8">
+	<title>CoreView-PS</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<meta name="robots" content="noindex,nosnippet,nofollow">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css">
+	<link rel="shortcut icon" href="https://www.msss.gouv.qc.ca/favicon.ico" />
+	<style>
+		.sidebar ul li a {
+			display: initial;
+		}
+
+		.sidebar ul li.active a {
+			padding-right: 5px;
+		}
+
+		em>img {
+			width: 1em;
+			height: 1em;
+			vertical-align: middle;
+		}
+
+		@media (min-width: 800px) {
+			.sidebar .sidebar-nav {
+				padding: 15px 15px 40px 15px;
+			}
+		}
+	</style>
+</head>
+
+<body>
+	<div id="app">Chargement en cours...</div>
+	<script>
+		window.$docsify = {
+			logo: 'img/logo.png',
+			name: 'CoreView-PS',
+			repo: '',
+			loadSidebar: '_navigation.md',
+			loadNavbar: '_navbar.md',
+			fallbackLanguages: ['fr', 'en'],
+			noCompileLinks: ['/img/.*'],
+			notFoundPage: '_404.md',
+			coverpage: true,
+			onlyCover: true,
+			alias: {
+			},
+			skipLink: {
+				'/fr/': 'Sauter vers le contenu principal',
+				'/en/': 'Jump to main content',
+			},
+			subMaxLevel: 1,
+		}
+	</script>
+	<!-- Docsify v4 -->
+	<script src="https://cdn.jsdelivr.net/npm/docsify@4"></script>
+	<script src="https://cdn.jsdelivr.net/npm/docsify-copy-code/dist/docsify-copy-code.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-powershell.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-json.min.js"></script>
+</body>
+
+</html>
