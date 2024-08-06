@@ -46,7 +46,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: zip-archive
-          path: .\src\Archive\coreview-ps.zip
+          path: .\src\Archive
           if-no-files-found: warn
           overwrite: true
 
@@ -65,8 +65,27 @@ jobs:
 
     runs-on: ubuntu-latest
     steps:
+      - name: Create deploy directory
+        run: mkdir -p ./deploy
+
+      - name: Download zip-archive artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: zip-archive
+          path: ./deploy
+
+      - name: Create index.html in ./deploy
+        run: |
+          echo "<!doctype html><meta charset=utf-8><title>coreview-ps</title><a href=coreview-ps.zip>coreview-ps.zip</a>'" > ./deploy/index.html
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./deploy
+
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-        with:
-          artifact_name: zip-archive
