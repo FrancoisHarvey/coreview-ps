@@ -7,11 +7,12 @@
 - [Prérequis](fr/prerequis.md) <span class="mirror">➜</span> débutez ici
 - [Obtention d'un compte d'API](fr/compte-api.md)
 - [Téléchargement](fr/telechargement.md)
+- [Installation](fr/installation.md)
 - [Tutoriel pas à pas](fr/tutoriel.md)
 
 <h3>▶️ Gestion des flux</h3>
 
-- [Exécuter un flux](fr/flux.md)
+- [Exécuter un flux](fr/demarrer-flux.md)
 
 <h3>📕 Liste des cmdlets</h3>
 

@@ -75,9 +75,17 @@
 			fallbackLanguages: ['fr', 'en'],
 			noCompileLinks: ['/img/.*'],
 			notFoundPage: '_404.md',
-			coverpage: true,
+			coverpage: false,
 			onlyCover: true,
 			alias: {
+				'/': '/fr/',
+				'/en-US/': '/en/',
+				'/fr-FR/': '/fr/',
+				'/en': '/en/',
+				'/fr': '/fr/',
+				'/_headerbar.md': '/fr/_headerbar.md',
+				'/_navigation.md': '/fr/_navigation.md',
+				'/_404.md': '/fr/_404.md',
 			},
 			skipLink: {
 				'/fr/': 'Sauter vers le contenu principal',

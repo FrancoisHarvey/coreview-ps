@@ -11,14 +11,15 @@ pour lequel une clé d'API a été générée.
    d'API.
 
 3. Conservez votre clé d'API en sûreté: cette clé agit essentiellement de mot
-   de passe auprès des APIs de CoreView et ne doit jamais être divulguée.
+   de passe auprès des APIs de CoreView et __ne doit jamais être divulguée__.
 
 Vous devriez maintenant être en mesure de vous connecter aux APIs de CoreView
 à l'aide de cette clé d'API. Veuillez toutefois en noter la date d'expiration.
 
-!> Il est de votre responsabilité d'ouvrir un billet auprès du Centre de
-   services 1 mois avant la date d'expiration de votre clé d'API afin d'obtenir
-   une nouvelle clé d'API.
+!> Veuillez noter la date d'expiration de votre clé d'API. Il est de votre
+   responsabilité d'ouvrir un billet auprès du Centre de services 1 mois avant
+   la date d'expiration de votre clé d'API afin d'obtenir une nouvelle clé
+   d'API, sans quoi vous perdrez l'accès aux APIs de CoreView.
 
 <br>
 

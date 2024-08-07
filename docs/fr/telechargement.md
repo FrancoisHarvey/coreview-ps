@@ -12,7 +12,7 @@ Ce projet (« CoreView-PS ») est distribué sous license
 
 ## Procéder au téléchargement
 
-Version actuelle: <span id="buildversion">~</span> <br>
+Déploiement actuel: v<span id="buildversion">~</span> <br>
 Date de publication: <span id="builddate">~</span>
 
 [Télécharger coreview-ps.zip](https://santeqc.github.io/coreview-ps/coreview-ps.zip ":class=button-primary")
@@ -21,10 +21,9 @@ Date de publication: <span id="builddate">~</span>
 
 ## Suite
 
-Vous pouvez maintenant suivre le tutoriel pas à pas pour installer et configurer
-CoreView-PS.
+Vous pouvez maintenant procéder à l’installation de CoreView-PS.
 
-[Suite: tutoriel pas à pas](fr/tutoriel.md ":class=button")
+[Suite: installation](fr/installation.md ":class=button")
 
 <script>
     const buildversion = document.getElementById("buildversion");
@@ -33,8 +32,9 @@ CoreView-PS.
     fetch("https://api.github.com/repos/SanteQc/coreview-ps/actions/workflows/wf_Windows_Core.yml/runs?per_page=1&branch=main&event=push&status=success")
         .then(response => response.json())
         .then(data => {
-            buildversion.textContent = data.workflow_runs[0].run_number;
-            builddate.textContent = new Date(data.workflow_runs[0].run_started_at).toLocaleDateString('fr-CA', { dateStyle: 'full' });
+            const run = data.workflow_runs[0];
+            buildversion.textContent = `${run.run_number} (commit ${run.head_sha.substring(0, 7)})`;
+            builddate.textContent = new Date(run.run_started_at).toLocaleDateString('fr-CA', { dateStyle: 'full' });
         });
 </script>
 
