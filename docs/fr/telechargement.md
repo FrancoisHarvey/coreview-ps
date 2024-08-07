@@ -12,7 +12,7 @@ Ce projet (« CoreView-PS ») est distribué sous license
 
 ## Procéder au téléchargement
 
-Déploiement actuel: v<span id="buildversion">~</span> <br>
+Déploiement actuel: v<span id="buildversion">~</span> (commit <a href="https://github.com/SanteQc/coreview-ps/commit/" id="commitid"></a>) <br>
 Date de publication: <span id="builddate">~</span>
 
 [Télécharger coreview-ps.zip](https://santeqc.github.io/coreview-ps/coreview-ps.zip ":class=button-primary")
@@ -28,12 +28,15 @@ Vous pouvez maintenant procéder à l’installation de CoreView-PS.
 <script>
     const buildversion = document.getElementById("buildversion");
     const builddate = document.getElementById("builddate");
+    const commitid = document.getElementById("commitid");
 
     fetch("https://api.github.com/repos/SanteQc/coreview-ps/actions/workflows/wf_Windows_Core.yml/runs?per_page=1&branch=main&event=push&status=success")
         .then(response => response.json())
         .then(data => {
             const run = data.workflow_runs[0];
-            buildversion.textContent = `${run.run_number} (commit ${run.head_sha.substring(0, 7)})`;
+            buildversion.textContent = run.run_number;
+            commitid.href += run.head_sha;
+            commitid.textContent = run.head_sha.substring(0, 7);
             builddate.textContent = new Date(run.run_started_at).toLocaleDateString('fr-CA', { dateStyle: 'full' });
         });
 </script>
