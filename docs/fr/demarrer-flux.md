@@ -35,17 +35,20 @@ Nom d'affichage  : Nom d’utilisateur principal
 Type             : chaîne de caractères
 Est obligatoire  : Oui
 
-Nom du paramètre : NouveauNumeroPermis
-Type             : chaîne de caractères
-Est obligatoire  : Oui
+Nom du paramètre         : NouveauNumeroPermis
+Description du paramètre : Le nouveau numéro de permis
+Type                     : chaîne de caractères
+Est obligatoire          : Oui
 
-Nom du paramètre : AncienNumeroPermis
-Type             : chaîne de caractères
-Est obligatoire  : Oui
+Nom du paramètre         : AncienNumeroPermis
+Description du paramètre : Le numéro débutant par le préfixe R
+Type                     : chaîne de caractères
+Est obligatoire          : Oui
 
-Nom du paramètre : AdresseCourrielPourErreurs
-Type             : chaîne de caractères
-Est obligatoire  : Oui
+Nom du paramètre         : AdresseCourrielPourErreurs
+Description du paramètre : Inscrire une adresse courriel pour recevoir les messages d'erreur
+Type                     : chaîne de caractères
+Est obligatoire          : Oui
 ```
 
 ## Préparation de la charge utile

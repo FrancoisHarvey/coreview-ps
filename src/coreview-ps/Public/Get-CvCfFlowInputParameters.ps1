@@ -62,8 +62,8 @@ function Write-CvInputParameterInfo {
 		}
 
 		function ExtractParameterDescription {
-			if ($Parameter.ContainsKey('description')) {
-				[void]$paramInfo.Add('FlowParameterDescription', $Parameter.description)
+			if ($Parameter.ContainsKey('inputDescription') -and -not [string]::IsNullOrWhiteSpace($Parameter.inputDescription)) {
+				[void]$paramInfo.Add('FlowParameterDescription', $Parameter.inputDescription)
 			}
 		}
 
