@@ -59,7 +59,8 @@ function Test-CvCfFlowInputParameters {
 				}
 
 				try {
-					Test-Json -Json $kv.Value -Schema ($propSchema | ConvertTo-Json -Compress -Depth 10)
+					$JsonValue = $kv.Value | ConvertTo-Json -Compress -Depth 10
+					Test-Json -Json $JsonValue -Schema ($propSchema | ConvertTo-Json -Compress -Depth 10) | Out-Null
 				}
 				catch {
 					Write-ErrorMsg InvalidFlowParameter $kv.Key $_.Exception.ToString()
@@ -69,7 +70,8 @@ function Test-CvCfFlowInputParameters {
 
 		function ValidateEntireSchema {
 			try {
-				Test-Json -Json $InputParameters -Schema $mutable.jsonFlowSchema
+				$JsonInputParameters = $InputParameters | ConvertTo-Json -Compress -Depth 10
+				Test-Json -Json $JsonInputParameters -Schema $mutable.jsonFlowSchema | Out-Null
 			}
 			catch {
 				Write-ErrorMsg UnexpectedFlowValidationError $_.Exception.ToString()
