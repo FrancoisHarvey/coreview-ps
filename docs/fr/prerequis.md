@@ -4,7 +4,7 @@ Pour utiliser ce module PowerShell, vous devez satisfaire les conditions
 suivantes:
 
 - Avoir installé [PowerShell 7]
-- Avoir installé [.NET runtime version 8] ou ultérieure
+- Avoir installé [.NET runtime version 8] ou une version ultérieure
 - Avoir fait la demande d'un compte de service pour utilisation avec les APIs
   de CoreView.
 - Posséder une clé d'API pour le compte de service.
