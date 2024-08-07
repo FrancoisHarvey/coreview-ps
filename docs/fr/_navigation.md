@@ -16,7 +16,8 @@
 
 <h3>📕 Liste des cmdlets</h3>
 
-- Connect-CvAPI
+- [Connect-CvAPI](fr/cmdlets/Connect-CvAPI.md)
+- [Disconnect-CvAPI](fr/cmdlets/Disconnect-CvAPI.md)
 - Get-CvCfCustomList
 - Get-CvCfFlowExecution
 - Get-CvCfFlowInputParameters

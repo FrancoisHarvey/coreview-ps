@@ -36,7 +36,7 @@ la manière suivante:
 
 ```powershell
 $CleApi = 'abcd1234efgh5678ijkl9012mnop3456qrst7890uvwx1234yzab5678cdef9012'
-$CleApiSS = ConvertTo-SecureString -String $ApiKey -AsPlainText -Force
+$CleApiSS = ConvertTo-SecureString -String $CleApi -AsPlainText -Force
 ```
 
 Ensuite, vous pouvez vous connecter à CoreView en utilisant la commande

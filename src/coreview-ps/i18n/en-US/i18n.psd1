@@ -69,6 +69,7 @@ RefreshingJWT = The session has expired. Trying to establish a new session with 
 RunCvContextForInfo = You may run the 'Get-CvSessionInfo' command to obtain details about the current session
 SendingLoginRequestToCoreView = Sending a login request to CoreView
 SessionNotInitialized = The session has not been initialized. Please run the 'Connect-CvAPI' command to log in to CoreView
+SessionSuccessfullyDisconnected = The session has been disconnected successfully
 SessionSuccessfullyRefreshed = The session has been refreshed successfully
 UnableToObtainEnvFileFromCoreView = Unable to obtain the CoreView environment configuration file from the management portal
 UnexpectedDataInCoreViewEnvFile = Unexpected data in the CoreView environment configuration file. Please update the JSON schema
