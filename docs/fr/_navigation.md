@@ -8,11 +8,13 @@
 - [Téléchargement](fr/telechargement.md)
 - [Installation](fr/installation.md)
 - [Tutoriel pas à pas](fr/tutoriel.md)
+
+<h3>💡 Guides et astuces</h3>
+
+- [Glossaire des termes employés](fr/glossaire.md)
 - [Utilisation de SecretManagement](fr/SecretManagement.md)
-
-<h3>▶️ Gestion des flux</h3>
-
-- [Exécuter un flux](fr/demarrer-flux.md)
+- [Activation du mode débogage](fr/mode-debogage.md)
+- [Exécuter et surveiller un flux](fr/demarrer-flux.md)
 
 <h3>📕 Liste des cmdlets</h3>
 

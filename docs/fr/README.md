@@ -10,4 +10,4 @@ Veuillez sélectionner un article dans le menu de navigation pour débuter.
 
 <br>
 
-[Voir les prérequis](fr/prerequis.md ":class=button-primary")
+[Voir les prérequis](fr/prerequis.md ":class=button-primary") <span class="mirror">➜</span> débutez ici
