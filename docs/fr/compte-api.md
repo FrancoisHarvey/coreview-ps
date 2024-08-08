@@ -3,12 +3,18 @@
 Pour avoir accès aux APIs de CoreView, vous devez obtenir un compte de service
 pour lequel une clé d'API a été générée.
 
+?> Nous vous conseillons de lire dans son entièreté les articles de la rubrique
+   *Mise en service*, disponibles dans le menu de navigation à gauche, avant de
+   faire la demande d'un compte d'API.
+
+## Processus de demande
+
 1. Évaluez votre besoin: avez-vous besoin de gérer des utilisateurs? Devez-vous
    gérer des groupes? Nécessitez-vous d'avoir accès à un flux en particulier?
 
-2. Ouvrez un billet au Centre de services et expliquez votre besoin. Un agent
-   créera pour vous un compte de service au besoin et lui assignera une clé
-   d'API.
+2. Ouvrez un billet au Centre de services et expliquez de façon détaillée votre
+   besoin exact. Un agent créera pour vous un compte de service au besoin et lui
+   assignera une clé d'API.
 
 3. Conservez votre clé d'API en sûreté: cette clé agit essentiellement de mot
    de passe auprès des APIs de CoreView et __ne doit jamais être divulguée__.
