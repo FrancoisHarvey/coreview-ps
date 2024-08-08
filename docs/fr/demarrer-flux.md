@@ -128,6 +128,21 @@ Voici un exemple de retour, lorsque convertit en JSON:
 
 ```json
 {
+    "ExecutionId": "a0aa7a75-dfa3-4dff-9e65-8b0ef957aaae",
+    "FlowId": "a3fe98e9-92e5-4576-ab9c-e01fcff85bba",
+    "Status": "Failed",
+    "Error": {
+        "StepName": "Arrêter le flux si le nouvel établissement est interdit",
+        "Details": "Action execution timed out",
+        "Message": "States.Timeout",
+        "Cause": "Workflow execution failed"
+    },
+    "Input": {
+        "UserPrincipalName": "maxime.untel.med@ssss.gouv.qc.ca",
+        "AcronymesEtablissements": "CISSSAT",
+        "Action": "Ajout",
+        "AdresseCourrielPourErreurs": "solange.untel@ssss.gouv.qc.ca"
+    },
     "ExecutionHistory": [
         {
             "Output": {
@@ -150,22 +165,7 @@ Voici un exemple de retour, lorsque convertit en JSON:
             },
             "StepName": "Évaluer les problèmes avec l'ajout"
         }
-    ],
-    "ExecutionId": "a0aa7a75-dfa3-4dff-9e65-8b0ef957aaae",
-    "Status": "Failed",
-    "Error": {
-        "StepName": "Arrêter le flux si le nouvel établissement est interdit",
-        "Details": "Action execution timed out",
-        "Message": "States.Timeout",
-        "Cause": "Workflow execution failed"
-    },
-    "Input": {
-        "UserPrincipalName": "maxime.untel.med@ssss.gouv.qc.ca",
-        "AcronymesEtablissements": "CISSSAT",
-        "Action": "Ajout",
-        "AdresseCourrielPourErreurs": "solange.untel@ssss.gouv.qc.ca"
-    },
-    "FlowId": "a3fe98e9-92e5-4576-ab9c-e01fcff85bba"
+    ]
 }
 ```
 
