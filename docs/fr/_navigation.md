@@ -13,8 +13,9 @@
 
 - [Glossaire des termes employés](fr/glossaire.md)
 - [Utilisation de SecretManagement](fr/SecretManagement.md)
-- [Activation du mode débogage](fr/mode-debogage.md)
 - [Exécuter et surveiller un flux](fr/demarrer-flux.md)
+- [Activation du mode débogage](fr/mode-debogage.md)
+- [Choisir la langue d'affichage](fr/langue-affichage.md)
 
 <h3>📕 Liste des cmdlets</h3>
 
