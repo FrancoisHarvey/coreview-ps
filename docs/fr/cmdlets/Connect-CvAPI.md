@@ -25,7 +25,7 @@ Connect-CvAPI [-APIKey] <SecureString> [<CommonParameters>]
 La clé d'API à utiliser pour se connecter à l'API de CoreView. La clé d'API
 doit être une chaîne sécurisée [\[SecureString\]] pour protéger la
 confidentialité de la clé. Pour convertir une chaîne en [\[SecureString\]] ,
-utilisez la commande `ConvertTo-SecureString`:
+utilisez la commande [ConvertTo-SecureString]:
 
 ```powershell
 $CleApi = 'abcd1234efgh5678ijkl9012mnop3456qrst7890uvwx1234yzab5678cdef9012'
@@ -66,3 +66,4 @@ Connect-CvAPI -APIKey $CleApiSS
   l'opérateur actuellement connecté dans un format machine.
 
 [\[SecureString\]]: https://learn.microsoft.com/fr-ca/powershell/module/microsoft.powershell.security/convertto-securestring?view=powershell-7.4
+[ConvertTo-SecureString]: https://learn.microsoft.com/fr-ca/powershell/module/microsoft.powershell.security/convertto-securestring?view=powershell-7.4

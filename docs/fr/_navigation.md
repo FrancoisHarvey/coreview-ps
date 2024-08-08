@@ -21,7 +21,7 @@
 - [Get-CvSessionInfo](fr/cmdlets/Get-CvSessionInfo.md)
 - [Get-CvContext](fr/cmdlets/Get-CvContext.md)
 
-<h4>Lancement de flux</h4>
+<h4>Lancement de flux CoreFlow</h4>
 
 - [Get-CvCfFlowInputParameters](fr/cmdlets/Get-CvCfFlowInputParameters.md)
 - [New-CvCfFlowExecution](fr/cmdlets/New-CvCfFlowExecution.md)
