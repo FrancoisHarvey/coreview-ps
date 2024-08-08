@@ -4,6 +4,7 @@
 
 - [Prérequis](fr/prerequis.md) <span class="mirror">➜</span> débutez ici
 - [Obtention d'un compte d'API](fr/compte-api.md)
+- [Mises en garde](fr/mises-en-garde.md)
 - [Téléchargement](fr/telechargement.md)
 - [Installation](fr/installation.md)
 - [Tutoriel pas à pas](fr/tutoriel.md)

@@ -23,4 +23,4 @@ Vous devriez maintenant être en mesure de vous connecter aux APIs de CoreView
 
 <br>
 
-[Suite: téléchargement](fr/telechargement.md ":class=button")
+[Suite: mises en garde](fr/mises-en-garde.md ":class=button")

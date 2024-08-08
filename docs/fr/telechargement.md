@@ -5,6 +5,9 @@ Le code source est distribué sous forme de fichier zip compressé.
 ?> Avant de commencer, veuillez vous assurer que vous satisfaites les prérequis.
    Voir l’article intitulé « [Prérequis](fr/prerequis.md) »
 
+!> Avant de commencer, veuillez lire attentivement les conditions d'utilisation.
+   Voir l’article intitulé « [Mises en garde](fr/mises-en-garde.md) »
+
 ## Licence
 
 Ce projet (« CoreView-PS ») est distribué sous license

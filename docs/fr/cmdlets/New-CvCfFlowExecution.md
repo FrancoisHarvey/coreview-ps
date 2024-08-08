@@ -40,8 +40,21 @@ flux de travail CoreFlow. Les paramètres d'entrée sont spécifiques à chaque 
 de travail CoreFlow et doivent être obtenus à l'aide de la commande
 [Get-CvCfFlowInputParameters].
 
-La charge utile est un [\[Hashtable\]] dans laquelle chaque clé correspond à un
-paramètre d'entrée et chaque valeur correspond à la valeur du paramètre.
+La charge utile est une table de hachage [\[Hashtable\]] dans laquelle chaque
+clé correspond à un paramètre d'entrée et chaque valeur correspond à la valeur
+du paramètre.
+
+Si l’on doit construire la table de hachage en plusieurs étapes, il est possible
+de définir une table de hachage en premier et de la remplir ensuite
+progressivement:
+
+```powershell
+$ChargeUtile = @{}
+
+$ChargeUtile['Domain'] = 'ssss.gouv.qc.ca'
+$ChargeUtile['OU_N1']  = '065000'
+...
+```
 
 <br>
 
@@ -78,6 +91,14 @@ utilisé pour suivre l'exécution du flux à l'aide de la commande
 
 <br>
 
+## Notes
+
+!> Il est possible que la requête de lancement de flux échoue. Dans ce cas, elle
+   générera une erreur. <br> Pour capturer les erreurs, il est nécessaire
+   d’utiliser un [bloc try-catch] lors de l’envoi de la requête.
+
+<br>
+
 ## Voir aussi
 
 - [Get-CvCfFlowInputParameters] pour obtenir les paramètres d'entrée d'un flux
@@ -95,3 +116,4 @@ utilisé pour suivre l'exécution du flux à l'aide de la commande
 
 [\[Hashtable\]]: https://learn.microsoft.com/fr-ca/powershell/module/microsoft.powershell.core/about/about_hash_tables?view=powershell-7.4
 [\[Guid\]]: https://learn.microsoft.com/fr-ca/dotnet/api/system.guid?view=net-8.0
+[bloc try-catch]: https://docs.microsoft.com/fr-ca/powershell/module/microsoft.powershell.core/about/about_try_catch_finally?view=powershell-7.2#catching-errors
