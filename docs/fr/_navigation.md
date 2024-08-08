@@ -8,6 +8,7 @@
 - [Téléchargement](fr/telechargement.md)
 - [Installation](fr/installation.md)
 - [Tutoriel pas à pas](fr/tutoriel.md)
+- [Utilisation de SecretManagement](fr/SecretManagement.md)
 
 <h3>▶️ Gestion des flux</h3>
 

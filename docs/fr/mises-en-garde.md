@@ -1,5 +1,8 @@
 # Mises en garde
 
+Veuillez lire attentivement les mises en garde suivantes avant de commencer à
+utiliser les APIs de CoreView.
+
 ## Stockage des clés d'API
 
 !> Les clés d'API sont sensibles et doivent être protégées. Ne les partagez pas
@@ -11,8 +14,11 @@ nous vous recommendons stocker la clé d'API à l'aide du module
 
 Consultez les articles suivants pour plus de détails:
 
+- [Gestion des secrets avec SecretManagement](fr/SecretManagement.md) (tutoriel)
 - [Prise en main du module SecretStore]
 - [Utiliser secretStore dans l’automatisation]
+
+<br>
 
 ## Expiration des clés d'API
 
