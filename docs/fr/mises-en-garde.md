@@ -20,6 +20,21 @@ Consultez les articles suivants pour plus de détails:
 
 <br>
 
+## Portée des clés d'API
+
+!> Les clés d'API sont délivrées pour des besoins spécifiques. Et doivent
+    seulement être utilisées pour ces besoins.
+
+Chaque clé d'API doit servir à __une seule__ automatisation, application ou
+script. Si vous avez besoin de plusieures clés d'API pour différents besoins,
+veuillez ouvrir une demande au Centre de services pour obtenir de nouvelles
+clés. Les clés d'API ne doivent pas être partagées entre differents projets ou
+équipes.
+
+Cette restriction est en place pour des raisons de sécurité et de traçabilité.
+
+<br>
+
 ## Expiration des clés d'API
 
 !> Les clés d'API __ont une date d'expiration__. Il est de votre responsabilité

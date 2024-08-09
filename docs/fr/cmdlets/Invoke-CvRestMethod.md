@@ -15,7 +15,7 @@ cmdlets pour obtenir des informations sur l'environnement CoreView, mais il peut
 également être utilisé pour effectuer d'autres opérations sur l'API principale.
 
 !> Il est fortement déconseillé d'utiliser ce cmdlet directement, sauf si vous
-   savez exactement ce que vous faites.Les APIs de CoreView sont complexes et
+   savez exactement ce que vous faites. Les APIs de CoreView sont complexes et
    très peu documentées, et il est facile de faire des erreurs si vous n'êtes
    pas familier avec elles.
 
