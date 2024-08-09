@@ -11,7 +11,7 @@
 	RootModule           = 'coreview-ps.psm1'
 
 	# Version number of this module.
-	ModuleVersion        = '2.0.0'
+	ModuleVersion        = '2.1.0'
 
 	# Supported PSEditions
 	CompatiblePSEditions = @('Desktop', 'Core')
@@ -32,7 +32,7 @@
 	Description          = 'PowerShell module for CoreView'
 
 	# Minimum version of the PowerShell engine required by this module
-	PowerShellVersion    = '7.1'
+	PowerShellVersion    = '7.4'
 
 	# Name of the PowerShell host required by this module
 	# PowerShellHostName = ''
