@@ -29,6 +29,11 @@ Get-Command -Module 'CoreView-PS'
 
 En cas de succès, vous devriez voir la liste des commandes du module.
 
+## Mise à jour du module
+
+Pour mettre à jour le module CoreView-PS, vous pouvez simplement supprimer le
+répertoire du module et répéter les étapes de l'installation.
+
 ## Suite
 
 Vous pouvez maintenant suivre le tutoriel pas à pas de CoreView-PS.
