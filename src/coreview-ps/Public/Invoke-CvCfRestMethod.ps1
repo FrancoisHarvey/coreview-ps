@@ -85,7 +85,7 @@ function Invoke-CvCfRestMethod {
 	}
 
 	# CoreFlow API responses are almost always wrapped in a 'data' object
-	if ($response.ContainsKey('data')) {
+	elseif ($response.ContainsKey('data')) {
 		return $response.data
 	}
 
