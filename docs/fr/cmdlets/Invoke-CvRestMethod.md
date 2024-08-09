@@ -1,31 +1,30 @@
-# Invoke-CvCfRestMethod
+# Invoke-CvRestMethod
 
 ## Résumé
 
-Permet d'envoyer une requête HTTP à l'API de CoreView CoreFlow.
+Permet d'envoyer une requête HTTP à l'API principale de CoreView.
 
-> À ne pas confondre avec [Invoke-CvRestMethod] qui envoie des requêtes à l'API
-> principale de CoreView.
+> À ne pas confondre avec [Invoke-CvCfRestMethod] qui permet d'envoyer des
+> requêtes HTTP à l'API des flux de travail CoreFlow de CoreView.
 
 ## Description
 
-Le cmdlet `Invoke-CvCfRestMethod` permet d'envoyer une requête HTTP à l'API de
-CoreView CoreFlow. Ce cmdlet est principalement utilisé par les autres cmdlets
-pour lancer des flux de travail CoreFlow, mais il peut également être utilisé
-pour effectuer d'autres opérations sur l'API de CoreFlow.
+Le cmdlet `Invoke-CvRestMethod` permet d'envoyer une requête HTTP à l'API
+principale de CoreView. Ce cmdlet est principalement utilisé par les autres
+cmdlets pour obtenir des informations sur l'environnement CoreView, mais il peut
+également être utilisé pour effectuer d'autres opérations sur l'API principale.
 
 !> Il est fortement déconseillé d'utiliser ce cmdlet directement, sauf si vous
-   savez exactement ce que vous faites. Pour lancer un flux de travail CoreFlow,
-   utilisez plutôt la commande [New-CvCfFlowExecution]. Les APIs de CoreView
-   CoreFlow sont complexes et très peu documentées, et il est facile de faire
-   des erreurs si vous n'êtes pas familier avec elles.
+   savez exactement ce que vous faites.Les APIs de CoreView sont complexes et
+   très peu documentées, et il est facile de faire des erreurs si vous n'êtes
+   pas familier avec elles.
 
 <br>
 
 ## Syntaxe
 
 ```powershell
-Invoke-CvCfRestMethod [-Endpoint] <Uri> [-Method {Get | Post | Put | Delete | Patch}] [-SearchParams <Hashtable>] [-Body <Hashtable>] [-AsText] [<CommonParameters>]
+Invoke-CvRestMethod [-Endpoint] <Uri> [-Method {Get | Post | Put | Delete | Patch}] [-SearchParams <Hashtable>] [-Body <Hashtable>] [-AsText] [<CommonParameters>]
 ```
 
 ## Paramètres
@@ -33,15 +32,15 @@ Invoke-CvCfRestMethod [-Endpoint] <Uri> [-Method {Get | Post | Put | Delete | Pa
 ### `-Endpoint <Uri>`
 
 Le paramètre `-Endpoint` permet de spécifier le point de terminaison de l'API
-REST à appeler. L'URI fournie est relative à l'URI de base de l'API CoreView
-CoreFlow. Par exemple, si la région du centre de données est `CAE`, l'URI de
-base de l'API de CoreFlow sera `https://coreflowcaeapi.coreview.com/`. La
+REST à appeler. L'URI fournie est relative à l'URI de base de l'API principale
+de CoreView. Par exemple, si la région du centre de données est `CAE`, l'URI de
+base de l'API principale sera `https://caeapi.4ward365.com/`. La
 valeur fournie à ce paramètre sera concaténée à l'URI de base pour former l'URI
 complète. Ainsi, si vous passez la valeur `abc/def` à ce paramètre, l'URI
-complète de l'appel sera `https://coreflowcaeapi.coreview.com/abc/def`.
+complète de l'appel sera `https://caeapi.4ward365.com/abc/def`.
 
-Pour référence, vous pouvez obtenir l'URI de base de l'API CoreView CoreFlow en
-utilisant la commande [Get-CvSessionInfo] ou [Get-CvContext].
+Pour référence, vous pouvez obtenir l'URI de base de l'API principale de
+CoreView en utilisant la commande [Get-CvSessionInfo] ou [Get-CvContext].
 
 ### `-Method {Get | Post | Put | Delete | Patch}`
 
@@ -109,43 +108,24 @@ hachage.
 
 ## Exemples
 
-### Exemple 1: Lancer un flux de travail CoreFlow
+### Exemple 1: Obtenir les détails d'un opérateur spécifique
 
 ```powershell
-$IdFlux = 'a3fe98e9-92e5-4576-ab9c-e01fcff85bba'
-
-$ChargeUtile = @{
-    UserPrincipalName          = 'marcel.untel@ssss.gouv.qc.ca'
-    AcronymesEtablissements    = 'CCOMTL'
-    Action                     = 'Ajout'
-    AdresseCourrielPourErreurs = 'martine.untel@msss.gouv.qc.ca'
+$SearchParams = @{
+    username = 'marcel.untel@ssss.gouv.qc.ca'
 }
 
-$execution = Invoke-CvCfRestMethod -Endpoint "api/executions/${IdFlux}" -Method Post -Body $InputParameters
-```
-
-### Exemple 2: Exporter un flux de travail CoreFlow
-
-```powershell
-$IdFlux = 'a3fe98e9-92e5-4576-ab9c-e01fcff85bba'
-
-$Params = @{
-    include = 'Actions'
-    edit    = $true
-}
-
-$flux = Invoke-CvCfRestMethod -Endpoint "api/workflows/${IdFlux}" -SearchParams $Params -Method Get -AsText
+$operateur = Invoke-CvRestMethod -Endpoint "api/register" -Method Get -SearchParams $SearchParams
 ```
 
 <br>
 
 ## Voir aussi
 
-- [Invoke-CvRestMethod] pour envoyer des requêtes HTTP à l'API principale de
-  CoreView.
+- [Invoke-CvCfRestMethod] pour envoyer des requêtes HTTP à l'API des flux de
+  travail CoreFlow de CoreView.
 
-[New-CvCfFlowExecution]: fr/cmdlets/New-CvCfFlowExecution.md
-[Invoke-CvRestMethod]: fr/cmdlets/Invoke-CvRestMethod.md
+[Invoke-CvCfRestMethod]: fr/cmdlets/Invoke-CvCfRestMethod.md
 [Get-CvSessionInfo]: fr/cmdlets/Get-CvSessionInfo.md
 [Get-CvContext]: fr/cmdlets/Get-CvContext.md
 
