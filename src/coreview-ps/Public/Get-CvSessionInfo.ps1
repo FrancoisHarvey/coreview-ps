@@ -58,9 +58,11 @@
 			'ContextInfoSessionAudience' = $context.SessionAudience -join ', '
 		}
 		'ContextInfoEnvironmentSection' = [ordered]@{
-			'ContextInfoPSHostVersion' = $context.PSHostVersion
-			'ContextInfoModuleName'    = $context.ModuleName
-			'ContextInfoModuleVersion' = $context.ModuleVersion
+			'ContextInfoPSHostVersion'     = $context.PSHostVersion
+			'ContextInfoModuleName'        = $context.ModuleName
+			'ContextInfoModuleVersion'     = $context.ModuleVersion
+			'ContextInfoModuleBuildNumber' = $context.ModuleBuildNumber
+			'ContextInfoModuleCommitHash'  = $context.ModuleCommitHash
 		}
 	}
 

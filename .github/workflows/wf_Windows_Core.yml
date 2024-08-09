@@ -25,6 +25,15 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
 
+      - name: Inject build number and commit hash
+        shell: pwsh
+        run: |
+          $moduleManifest = '.\src\coreview-ps\coreview-ps.psd1'
+          (Get-Content -Path $moduleManifest) `
+            -replace 'BuildNumber += +\$null', "BuildNumber = $env:GITHUB_RUN_NUMBER" `
+            -replace 'BuildCommitHash += +\$null', "BuildCommitHash = '$env:GITHUB_SHA'" | `
+            Set-Content -Path $moduleManifest -Encoding utf8BOM
+
       - name: Bootstrap
         shell: pwsh
         run: ./.github/workflows/actions_bootstrap.ps1

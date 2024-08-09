@@ -52,6 +52,7 @@
 	$session = Get-CvSessionObject
 	$env = Get-CvEnvironment -HttpClient $session.httpClient
 	$module = Get-Module 'coreview-ps'
+	$moduleMeta = $MyInvocation.MyCommand.Module.PrivateData
 
 	return @{
 		TenantId             = $session.TenantId
@@ -64,6 +65,8 @@
 		OrgPortalSkus        = $session.OrgPortalSkus
 		ModuleName           = $module.Name
 		ModuleVersion        = $module.Version
+		ModuleBuildNumber    = $moduleMeta.BuildNumber
+		ModuleCommitHash     = $moduleMeta.BuildCommitHash
 		OperatorName         = $session.OperatorName
 		OperatorRoles        = $session.OperatorRoles
 		OperatorDirectRoles  = $session.OperatorDirectRoles

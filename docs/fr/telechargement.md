@@ -15,7 +15,7 @@ Ce projet (« CoreView-PS ») est distribué sous license
 
 ## Procéder au téléchargement
 
-Déploiement actuel: v<span id="buildversion">~</span> (commit <a href="https://github.com/SanteQc/coreview-ps/commit/" id="commitid"></a>) <br>
+Numéro de build: v<span id="buildversion">~</span> (commit <a href="https://github.com/SanteQc/coreview-ps/commit/" id="commitid"></a>) <br>
 Date de publication: <span id="builddate">~</span>
 
 [Télécharger coreview-ps.zip](https://santeqc.github.io/coreview-ps/coreview-ps.zip ":class=button-primary")
