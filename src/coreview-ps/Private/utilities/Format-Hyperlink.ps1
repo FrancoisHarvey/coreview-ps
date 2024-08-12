@@ -12,14 +12,14 @@ function Format-Hyperlink {
 	)
 
 	process {
-		if ($Label) {
-			if ($Env:WT_SESSION) {
-				$escapeSequence = [char]27
-				return "$escapeSequence]8;;$Uri$escapeSequence\$Label$escapeSequence]8;;$escapeSequence"
-			}
-			return (Get-Msg UriWithLabel $Uri $Label)
+		if (-not $Label) {
+			$Label = $Uri
 		}
 
-		return "$Uri"
+		if ($Env:WT_SESSION) {
+			$escapeSequence = [char]27
+			return "${escapeSequence}]8;;${Uri}${escapeSequence}\${Label}${escapeSequence}]8;;${escapeSequence}\"
+		}
+		return (Get-Msg UriWithLabel $Uri $Label)
 	}
 }

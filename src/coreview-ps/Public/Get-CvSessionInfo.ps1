@@ -27,11 +27,11 @@
 
 	$info = [ordered]@{
 		'ContextInfoCoreViewSection'    = [ordered]@{
-			'ContextInfoConfigUrl'        = $script:CV_ENVIRONMENT_JSON
+			'ContextInfoConfigUrl'        = Format-Hyperlink $script:CV_ENVIRONMENT_JSON
 			'ContextInfoPortalAppName'    = $context.PortalAppName
 			'ContextInfoPortalAppVersion' = $context.PortalAppVersion
-			'ContextInfoApiUrl'           = $context.ApiUrl
-			'ContextInfoCoreFlowUrl'      = $context.CoreFlowUrl
+			'ContextInfoApiUrl'           = Format-Hyperlink $context.ApiUrl
+			'ContextInfoCoreFlowUrl'      = Format-Hyperlink $context.CoreFlowUrl
 		}
 		'ContextInfoCompanySection'     = [ordered]@{
 			'ContextInfoTenantId'             = $context.TenantId
@@ -45,7 +45,9 @@
 			'ContextInfoOrgPortalSkus'        = $context.OrgPortalSkus -join ', '
 		}
 		'ContextInfoOperatorSection'    = [ordered]@{
-			'ContextInfoOperatorUserId'   = $context.OperatorUserId
+			'ContextInfoOperatorUserId'   = Format-Hyperlink -Uri `
+				"https://app.coreview.com/administrations/manage-operators/user;id=$($context.OperatorUserId)" `
+				-Label $context.OperatorUserId
 			'ContextInfoOperatorUserName' = $context.OperatorUserName
 			'ContextInfoOperatorName'     = $context.OperatorName
 			'ContextInfoOperatorRoles'    = $context.OperatorRoles -join ', '
@@ -58,11 +60,30 @@
 			'ContextInfoSessionAudience' = $context.SessionAudience -join ', '
 		}
 		'ContextInfoEnvironmentSection' = [ordered]@{
-			'ContextInfoPSHostVersion'     = $context.PSHostVersion
-			'ContextInfoModuleName'        = $context.ModuleName
-			'ContextInfoModuleVersion'     = $context.ModuleVersion
-			'ContextInfoModuleBuildNumber' = $context.ModuleBuildNumber
-			'ContextInfoModuleCommitHash'  = $context.ModuleCommitHash
+			'ContextInfoPSHostVersion' = Format-Hyperlink -Uri `
+				"https://github.com/PowerShell/PowerShell/releases/tag/v$($context.PSHostVersion)" `
+				-Label $context.PSHostVersion
+			'ContextInfoModuleName'    = $context.ModuleName
+		}
+	}
+
+	if ($context.ModuleCommitHash) {
+		$manifestUrl = "https://github.com/SanteQc/coreview-ps/blob/$($context.ModuleCommitHash)/src/coreview-ps/coreview-ps.psd1#L14"
+		$commitUrl = "https://github.com/SanteQc/coreview-ps/commit/$($context.ModuleCommitHash)"
+		$runsURl = 'https://github.com/SanteQc/coreview-ps/actions'
+
+		$info.ContextInfoEnvironmentSection = $info.ContextInfoEnvironmentSection + `
+			[ordered] @{
+			'ContextInfoModuleVersion'     = "v$($context.ModuleVersion)+rev.$($context.ModuleBuildNumber) (commit $($context.ModuleCommitHash.Substring(0, 7)))"
+			'ContextInfoManifestVersion'   = Format-Hyperlink -Uri $manifestUrl -Label $context.ModuleVersion
+			'ContextInfoModuleBuildNumber' = Format-Hyperlink -Uri $runsURl -Label $context.ModuleBuildNumber
+			'ContextInfoModuleCommitHash'  = Format-Hyperlink -Uri $commitUrl -Label $context.ModuleCommitHash
+		}
+	}
+	else {
+		$info.ContextInfoEnvironmentSection = $info.ContextInfoEnvironmentSection + `
+			[ordered] @{
+			'ContextInfoManifestVersion' = $context.ModuleVersion
 		}
 	}
 

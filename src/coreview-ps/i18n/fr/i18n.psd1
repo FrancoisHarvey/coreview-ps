@@ -9,6 +9,7 @@ ContextInfoCoreFlowUrl = API CoreFlow
 ContextInfoCoreViewSection = Informations sur CoreView
 ContextInfoDatacenter = Centre de données CoreView
 ContextInfoEnvironmentSection = Informations sur l'environnement
+ContextInfoManifestVersion = Version du manifeste
 ContextInfoModuleBuildNumber = Numéro de build du module
 ContextInfoModuleCommitHash = Hash de commit du module
 ContextInfoModuleName = Nom du module
