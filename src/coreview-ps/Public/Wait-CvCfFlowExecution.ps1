@@ -15,7 +15,7 @@ function Wait-CvCfFlowExecution {
 	)
 
 	process {
-		while ((FlowExecutionIsNotFinished) -and -not (TimeouReached)) {
+		while ((FlowExecutionIsNotFinished) -and -not (TimeoutReached)) {
 			ContinueWaiting
 		}
 
